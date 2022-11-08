@@ -21,7 +21,6 @@ function App() {
     // const isConnected = useSelector((state) => state.connectionReducer)
     const {walletAddress, walletConnectionStatus, displayWalletAddress} = useSelector((state) => state.wallet)
 
-
     // useEffect(() => {
     //   if (!account) {
     //     dispatch(connectionAction(false));
@@ -69,8 +68,12 @@ function App() {
                     <DashboardLayout>
                         <Switch>
                             <Route path="/" component={ConnectWallet} exact />
-                            {walletConnectionStatus && <Route path='/dice' component={RollDice} />}
-                            {walletConnectionStatus && <Route path="/coin-flip" component={CoinFlip} /> }
+                            {walletConnectionStatus && (
+                                <Route path="/dice" component={RollDice} />
+                            )}
+                            {walletConnectionStatus && (
+                                <Route path="/coin-flip" component={CoinFlip} />
+                            )}
                             <Route path="*" component={ConnectWallet} />
                         </Switch>
                     </DashboardLayout>

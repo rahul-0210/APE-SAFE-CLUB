@@ -11,12 +11,12 @@ import ConnectWalletImg from '../assets/wallet/ConnectWalletLogo.svg'
 import MetamaskBrowserInfo from '../assets/wallet/metamask-browser.png'
 import GooglePlayImg from '../assets/wallet/googleplay.png'
 import AppStoreImg from '../assets/wallet/appstore.png'
-import { useSnackbar } from 'notistack'
+import {useSnackbar} from 'notistack'
 
 export default function ConnectWallet() {
     const {active, account, activate, deactivate, chainId} = useWeb3React()
-    const dispatch = useDispatch();
-    const { enqueueSnackbar } = useSnackbar();
+    const dispatch = useDispatch()
+    const {enqueueSnackbar} = useSnackbar()
     const {walletAddress, walletConnectionStatus, displayWalletAddress} =
         useSelector((state) => state.wallet)
     const [getHelpClicked, setGetHelpClicked] = React.useState(false)
@@ -36,12 +36,11 @@ export default function ConnectWallet() {
         } else {
             dispatch(setWalletConnectionStatus(active))
             if (chainId && chainId !== 56) {
-                console.log("%c Line:40 🥤 chainId", "color:#ed9ec7", chainId);
                 deactivate()
                 // toast.error("Please connect to smart chain for using money printer")
-                enqueueSnackbar("Please connect to smart chain.", {
-                    variant: "error",
-                  });
+                enqueueSnackbar('Please connect to smart chain.', {
+                    variant: 'error',
+                })
             } else {
                 if (active && account) {
                     dispatch(setWalletAddress(account))
@@ -56,9 +55,9 @@ export default function ConnectWallet() {
         try {
             await activate(injected)
         } catch (error) {
-            enqueueSnackbar("Please connect to smart chain.", {
-                variant: "error",
-              });
+            enqueueSnackbar('Please connect to smart chain.', {
+                variant: 'error',
+            })
         }
     }
 
@@ -119,7 +118,7 @@ export default function ConnectWallet() {
                                 Help Getting Started
                             </p>
                             <button
-                                className="gradient-btn"
+                                className="btn gradient-btn"
                                 onClick={connectToMetaMask}
                             >
                                 <img src={ConnectWalletImg} alt="" /> Connect
@@ -135,7 +134,7 @@ export default function ConnectWallet() {
                     <p>Connect wallet</p>
                     <p>Connect wallet to interact with dapp</p>
                     <button
-                        className="gradient-btn"
+                        className="btn gradient-btn"
                         onClick={connectToMetaMask}
                     >
                         <img src={ConnectWalletImg} alt="" /> Connect wallet
@@ -154,11 +153,11 @@ export default function ConnectWallet() {
                                 <>
                                     <p>Disconnect wallet</p>
                                     <p>
-                                        Select product from navigation to interact
-                                        with dapp
+                                        Select product from navigation to
+                                        interact with dapp
                                     </p>
                                     <button
-                                        className="gradient-btn"
+                                        className="btn gradient-btn"
                                         onClick={() => disconnect()}
                                     >
                                         <img src={ConnectWalletImg} alt="" />{' '}

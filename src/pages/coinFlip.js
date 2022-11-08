@@ -6,6 +6,7 @@ import {
     TableContainer,
     TableHead,
     TableRow,
+    Grid,
 } from '@material-ui/core'
 import React from 'react'
 import PageHeader from '../components/PageHeader'
@@ -56,27 +57,41 @@ export default function CoinFlip() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {/* {rows.map((row) => (
-                        ))} */}
                             <TableRow
                                 key={1}
                                 style={{
                                     '&:last-child td, &:last-child th': {
-                                        border: 0,
+                                        border: '0px',
                                     },
                                 }}
+                                className="table-row"
                             >
-                                <TableCell component="td" scope="row">
+                                <TableCell
+                                    className="table-row"
+                                    component="td"
+                                    scope="row"
+                                >
                                     0x1457d8DcD08f2865394949eCCE0b7Dd4D8c01697
                                 </TableCell>
-                                <TableCell align="right">
+                                <TableCell className="table-row" align="center">
                                     <img src={silverCoin} width={75} />
                                 </TableCell>
-                                <TableCell align="right">Open</TableCell>
-                                <TableCell align="right">
-                                    <button className="gradient-btn">
-                                        Join
-                                    </button>
+                                <TableCell className="table-row" align="right">
+                                    Open
+                                </TableCell>
+                                <TableCell className="table-row" align="right">
+                                    <Grid container spacing={2}>
+                                        <Grid item lg={6} md={12}>
+                                            <button className="btn gradient-btn w-100">
+                                                Join
+                                            </button>
+                                        </Grid>
+                                        <Grid item lg={6} md={12}>
+                                            <button className="btn border-gradient border-gradient-secondary w-100">
+                                                Watch
+                                            </button>
+                                        </Grid>
+                                    </Grid>
                                 </TableCell>
                             </TableRow>
                         </TableBody>

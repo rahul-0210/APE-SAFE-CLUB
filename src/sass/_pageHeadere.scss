@@ -7,17 +7,16 @@
     background-clip: content-box, border-box;
     color: #fff;
     padding: 10px;
-    .title{
+    .title {
         padding: 2rem;
         font-size: 1.5rem;
     }
-    .btn-div{
+    .btn-div {
         display: flex;
         justify-content: flex-end;
         align-items: center;
     }
-    .gradient-btn{
-        justify-content: end;
+    .gradient-btn {
         font-size: 1rem;
         margin: unset;
     }
