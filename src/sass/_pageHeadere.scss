@@ -1,0 +1,24 @@
+.title-div {
+    // box-shadow: 0px 5px 20px rgba(13, 56, 199, 0.102);
+    border-radius: 20px;
+    background-origin: border-box;
+    // backdrop-filter: blur(20px);
+    background-color: #0000007a;
+    background-clip: content-box, border-box;
+    color: #fff;
+    padding: 10px;
+    .title{
+        padding: 2rem;
+        font-size: 1.5rem;
+    }
+    .btn-div{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .gradient-btn{
+        justify-content: end;
+        font-size: 1rem;
+        margin: unset;
+    }
+}

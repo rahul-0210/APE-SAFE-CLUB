@@ -1,0 +1,109 @@
+.connectWallet {
+    display: flex;
+    height: 100%;
+    .main {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        height: 100%;
+        width: 100%;
+
+        .card-element {
+            // background: #f2f5fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            border: none;
+
+            .card-content {
+                width: 731px;
+                min-height: 353px;
+                height: auto;
+                background: #ffffffc7;
+                box-shadow: 0px 5px 20px rgba(13, 56, 199, 0.102);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                border: double 1px transparent;
+                border-radius: 10px;
+                // background-image: linear-gradient(white, white), radial-gradient(circle at top left, #142c48 4.02%, #c1d7fc 97.87%);
+                background-origin: border-box;
+                background-clip: content-box, border-box;
+                > div {
+                    margin: 8px;
+                    text-align: center;
+                    padding: 5px;
+                    p:nth-child(1) {
+                        font-weight: bold;
+                        font-size: 32px;
+                        color: #0a2148;
+                        margin-bottom: 10px;
+                    }
+                    p:nth-child(2) {
+                        font-weight: normal;
+                        font-size: 16px;
+                        color: #0a2148;
+                        opacity: 0.5;
+                        margin-bottom: 20px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.mobileWalletCard {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .metamaskImgDiv {
+        flex-basis: 60%;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .storeLinks {
+        flex-basis: 40%;
+        padding: 75px 0px;
+
+        img {
+            width: 80%;
+        }
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .mobileWalletCard {
+        .metamaskImgDiv {
+            flex-basis: 100%;
+        }
+
+        .storeLinks {
+            flex-grow: 1;
+            padding: 20px 5px 10px 5px;
+            display: flex;
+            flex-basis: 100%;
+
+            img {
+                width: 90%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .connectWallet {
+        .main {
+            .card-element {
+                .card-content {
+                    height: auto;
+                }
+            }
+        }
+    }
+}

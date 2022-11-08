@@ -4,6 +4,9 @@
     box-sizing: border-box;
     font-family: 'DM Sans', sans-serif;
 }
+html, body{
+    height:100%;
+}
 body {
     background-color: #000000 !important;
     background-repeat: no-repeat;
@@ -58,10 +61,16 @@ body {
         margin-right: 20px;
     }
 }
+
 .gradient-btn:hover {
     opacity: 0.8;
 }
 
+.App {
+    .main{
+        height:100%;
+    }
+}
 // layout
 @import './headerMenu';
 @import './sidebar';
@@ -69,7 +78,8 @@ body {
 @import './comingsoon';
 
 //files added in refactoring
-@import './layout/dashboardLayout.scss';
+@import './layout/dashboardLayout';
+@import './connectwallet';
 
-// @import "./pageHeadere";
-// @import "./coinflip";
+@import "./pageHeadere";
+@import "./coinflip";

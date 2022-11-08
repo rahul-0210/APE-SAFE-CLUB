@@ -6,6 +6,8 @@ import {useSnackbar} from 'notistack'
 
 import {DashboardLayout} from './components/layouts/DashboardLayout'
 import ConnectWallet from './pages/connectWallet'
+import CoinFlip from './pages/coinFlip'
+import RollDice from './pages/rollDice'
 // import coinFlip from "./pages/coinFlip";
 // import rollDice from "./pages/rollDice";
 // import LoaderComponent from "./components/loaderComponent";
@@ -16,7 +18,9 @@ function App() {
     // const { activateBrowserWallet, account } = useEthers()
     const history = useHistory()
     const dispatch = useDispatch()
-    const isConnected = useSelector((state) => state.connectionReducer)
+    // const isConnected = useSelector((state) => state.connectionReducer)
+    const {walletAddress, walletConnectionStatus, displayWalletAddress} = useSelector((state) => state.wallet)
+
 
     // useEffect(() => {
     //   if (!account) {
@@ -59,14 +63,14 @@ function App() {
     }, [])
 
     return (
-        <div className="App">
+        <div className="App g-sidenav-show  bg-gray-100">
             <Switch>
                 <Route path="*">
                     <DashboardLayout>
                         <Switch>
                             <Route path="/" component={ConnectWallet} exact />
-                            {/* {isConnected && <Route path='/dice' component={rollDice} />}
-              {isConnected && <Route path="/coin-flip" component={coinFlip} /> } */}
+                            {walletConnectionStatus && <Route path='/dice' component={RollDice} />}
+                            {walletConnectionStatus && <Route path="/coin-flip" component={CoinFlip} /> }
                             <Route path="*" component={ConnectWallet} />
                         </Switch>
                     </DashboardLayout>
