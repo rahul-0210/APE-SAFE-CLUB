@@ -1,0 +1,327 @@
+.navbar-main{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    backdrop-filter: blur(20px);
+    background-color: #0000007a;
+    .navbar-name{
+        display: flex;
+        align-items: center;
+        p{
+            font-weight: bold;
+            font-size: 18px;
+            color: #ffffff;
+            padding-left: 6px;
+        }
+        img {
+            width: 28px;
+        }
+        .burger{
+            margin-right: 10px;
+            cursor: pointer;
+            .burger-icon{
+                height: 3px;
+                background: #ffffff;
+                width: 30px;
+                margin-bottom: 5px;
+                &:last-child {
+                    margin-bottom: 0px;
+                }
+            }
+          
+        }
+        .GoBack{
+            color: #fff;
+            padding-right: 10px;
+            text-decoration: none;       
+            display: none;    
+            img {
+                height: 11px;
+            }
+        }
+        .back-show{
+            display: block;
+        }        
+        .m-hide{
+            display: block;
+        }
+        .m-show{
+            display: none;
+        }
+        @media screen and (max-width: 767px){
+            .m-hide{
+            display: none;
+            }
+            .m-show{
+            display: block;
+            }
+        }
+    }
+    .connection{
+        display: flex;
+        align-items: center;
+        .details{
+            display: flex;
+            img{
+                margin-right: 5px;  
+            }
+            p{
+                color: white;
+                margin-right: 5px;
+                font-weight: normal;
+                font-size: 16px;
+            }
+        }
+        button{
+            background: linear-gradient(90deg, #142c48 0%, #96a3ab 100%);
+            color: #ffffff;
+            border: none;
+            padding: 11px 11px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button:hover{
+            opacity: 0.8;
+        }
+    }
+    .network-View {
+        border-radius: 20px;
+        align-items: center;
+        display: flex;
+        margin: 0 10px;
+        .network-circle{
+            position: relative;
+            left: 0;
+            top: 0;
+        }
+        .icon-View{
+            position: relative;
+            top: 0;
+            left: 0;
+            align-items: center;
+            border-radius: 50%;
+            width: 30px;    
+            height: 30px;
+            justify-content: center;
+            text-align: center;
+            background: #000000;
+            opacity: 0.15;
+        }
+        img{
+            height: 20px;
+            position: absolute;
+            top: 5px;
+        }
+        p{
+            color: #ffffff;
+            padding: 0 10px;
+        }
+    }
+}
+
+.navbar-container-fullwidth {
+    flex: 1;
+}
+
+.navbar-container-with-airdrop {
+    flex: 1;
+}
+
+.navbar-container {
+    display: flex;
+    flex-direction: row;
+    
+    .airDropContainer {
+        background: linear-gradient(90.06deg, #0B2249 1.05%, #033386 99.95%);
+        display: inline-flex;
+        padding: 0 1.5rem;
+        align-items: center;
+
+        /* .airDropContainerText {
+            color: #FFFFFF;
+            margin: 10px;
+        } */
+
+        .airDropIcon {
+            margin-right: 8px;
+            height: auto;
+        }
+
+        .airDropText {
+            font-style: normal;
+            font-weight: bold;
+            font-size: 14px;
+            color: #FFFFFF;
+        }
+
+        
+
+        .container{
+            display: flex;
+            align-items: center;
+        }
+
+        .inner-container{
+            flex-direction: column;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-right: 10px;
+        }
+        
+        
+    }
+}
+
+.centerAlign{
+    display:  flex;
+    align-items: center;
+}
+
+.claimAirDropContainer {
+    display: flex;
+    flex-direction: row;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 1rem;
+    align-items: center;
+    .loading{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        img{
+            margin-right: 2px;
+            height: 20px;
+            -webkit-animation:spin 1s linear infinite;
+            -moz-animation:spin 1s linear infinite;
+            animation:spin 1s linear infinite;
+        }
+        p{
+            font-weight: 400;
+            font-size: 12px;
+            color: #ffffff;
+            padding: 10px;
+        }
+    }
+    button {
+        background: linear-gradient(90deg, #142c48 0%, #96a3ab 100%);
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        padding: 0.7rem;
+        font-size: 14px;
+        font-weight: 700;
+        color: #FFFFFF;
+    }
+
+    img {
+        height: auto;
+        margin-right: 1rem;
+    }
+
+    .ssgtText {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+        color: #FFFFFF;
+        margin-right: 1rem;
+        span {
+            font-size: 11px;
+            font-weight: normal;
+        }
+    }
+    .claimText{
+        color: #ffffff;
+        font-size: 14px;
+    }
+    .claimTextSubtitle{
+        color:#96a3ab;
+        font-size: 14px;
+    }
+}
+
+.spacing{
+    margin-left: 5px;
+}
+
+.spacing-right{
+    margin-right: 5px;
+}
+
+.btn-nav{
+    background: linear-gradient(90deg, #142c48 0%, #96a3ab 100%);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 0.7rem;
+    font-size: 14px;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+.airdropButton{
+    width: 250px;
+    border-radius: 0px !important;
+    background: linear-gradient(90deg, #142c48 0%, #96a3ab 100%);
+}
+
+.airdropButtonText {
+    color: #FFFFFF;
+}
+
+.airdropInnerHeading{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    .airDropCount {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        color: #FFFFFF;
+        padding: 0 0.5rem;
+    }
+    img{
+        margin-right: 5px;
+    }
+}
+
+@media screen and (max-width:992px) {
+    .navbar-main{
+        padding: 10px 10px;
+        
+        .navbar-name{
+            .burger{
+                display: block;
+            }
+        }
+        .connection{
+            .details{
+                display: none;
+            }
+        }
+    }
+
+    .airdropButton{
+        width: 100%;
+    }
+
+    .navbar-container {
+        flex-direction: column;
+        height: auto;
+        .airDropContainer{
+            padding: 0.5rem 0.5rem;
+            justify-content: space-evenly;
+            .claimAirDropContainer{
+                padding-left: 0px;
+
+                img{
+                    padding-left: 10px;
+                }
+            }
+            .airDropText{
+                font-size: 12px;
+            }
+        }   
+    }
+}

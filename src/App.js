@@ -1,23 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { Switch, Route, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useSnackbar } from "notistack";
 
-function App() {
+import { DashboardLayout } from "./components/layouts/DashboardLayout";
+import ConnectWallet from "./pages/connectWallet";
+// import coinFlip from "./pages/coinFlip";
+// import rollDice from "./pages/rollDice";
+// import LoaderComponent from "./components/loaderComponent";
+// import { connectionAction } from "./redux/actions/connectionAction";
+
+
+function  App() {
+  const { enqueueSnackbar } = useSnackbar();
+  // const { activateBrowserWallet, account } = useEthers()
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const isConnected = useSelector((state) => state.connectionReducer);
+
+  // useEffect(() => {
+  //   if (!account) {
+  //     dispatch(connectionAction(false));
+  //       history.push('/')
+  //   }
+  // }, [account, dispatch, history]);
+
+  useEffect(() => {
+    // activateBrowserWallet();
+    document.addEventListener('keydown', function(e) {
+      if (e.key === "F12") {
+        enqueueSnackbar("This function has been disabled for security reasons!", {
+          variant: "warning",
+        });
+        e.preventDefault();
+      }
+    }, false);
+    
+    document.addEventListener('contextmenu', function(e) {
+      enqueueSnackbar("This function has been disabled for security reasons!", {
+        variant: "warning",
+      });
+      e.preventDefault();
+    }, false);
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Switch>
+        <Route path="*">
+          <DashboardLayout>
+            <Switch>
+              <Route path='/' component={ConnectWallet} exact />
+              {/* {isConnected && <Route path='/dice' component={rollDice} />}
+              {isConnected && <Route path="/coin-flip" component={coinFlip} /> } */}
+              <Route path='*' component={ConnectWallet} />
+            </Switch>
+          </DashboardLayout>
+        </Route>
+      </Switch>
     </div>
   );
 }

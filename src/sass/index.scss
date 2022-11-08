@@ -1,0 +1,74 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "DM Sans", sans-serif;
+}
+body{
+  background-color:#000000 !important;
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  overflow-y: hidden;
+  background: linear-gradient(rgba(72,0,72,0),rgba(192,72,72,0)),url("../assets/main-banner.png");
+}
+#cursor {
+  position: absolute;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  border: 1px solid #00488A;
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  -webkit-transition: none;
+  transition: none;
+  pointer-events: none;
+  z-index: 9999999999;
+}
+#cursorInner {
+  width: 7px;
+  height: 7px;
+  background-color: #00488A;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-transition: none;
+  transition: none;
+  pointer-events: none;
+  z-index: 9999999999;
+}
+
+.gradient-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 24px;
+  border: none;
+  background: linear-gradient(90deg, #142c48 0%, #96a3ab 100%);
+  color: #ffffff;
+  margin: auto;
+  margin-bottom: 40px;
+  cursor: pointer;
+  img {
+    margin-right: 20px;
+  }
+}
+.gradient-btn:hover {
+  opacity: 0.8;
+}
+
+// layout
+@import './headerMenu';
+@import './sidebar';
+@import './navbar';
+@import './comingsoon';
+
+//files added in refactoring
+@import './layout/dashboardLayout.scss';
+
+// @import "./pageHeadere";
+// @import "./coinflip";
