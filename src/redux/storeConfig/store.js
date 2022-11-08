@@ -2,8 +2,11 @@
 import thunk from 'redux-thunk'
 import createDebounce from 'redux-debounced'
 import rootReducer from '../reducers/rootReducer'
-import { createStore, applyMiddleware, compose } from 'redux'
-import { useDispatch as useReduxDispatch, useSelector as useReduxSelector } from 'react-redux'
+import {createStore, applyMiddleware, compose} from 'redux'
+import {
+    useDispatch as useReduxDispatch,
+    useSelector as useReduxSelector,
+} from 'react-redux'
 
 // ** init middleware
 const middleware = [thunk, createDebounce()]
@@ -12,10 +15,14 @@ const middleware = [thunk, createDebounce()]
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 // ** Create store
-const store = createStore(rootReducer, {}, composeEnhancers(applyMiddleware(...middleware)))
+const store = createStore(
+    rootReducer,
+    {},
+    composeEnhancers(applyMiddleware(...middleware))
+)
 
 export const useSelector = useReduxSelector
 
 export const useDispatch = () => useReduxDispatch()
 
-export { store }
+export {store}

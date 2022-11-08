@@ -1,15 +1,26 @@
-import {SET_WALLET, SET_METAMASK_DISCONNECTED} from '../types'
+import {
+    SET_WALLET,
+    SET_WALLET_CONNECTION_STATUS,
+    SET_DISPLAY_WALLET,
+} from '../types'
 
-export const setMetamaskWalletAdress = (address) => dispatch => {
-  dispatch({
-    type: SET_WALLET,
-    payload: address
-  })
+export const setWalletAddress = (address) => (dispatch) => {
+    dispatch({
+        type: SET_WALLET,
+        payload: address,
+    })
 }
 
-export const setMetamaskWalletDisconnected = (connector) => dispatch => {
-  dispatch({
-    type: SET_METAMASK_DISCONNECTED,
-    payload: connector
-  })
+export const setWalletConnectionStatus = (status) => (dispatch) => {
+    dispatch({
+        type: SET_WALLET_CONNECTION_STATUS,
+        payload: status,
+    })
+}
+
+export const setDisplayWalletAdress = (displayAddress) => (dispatch) => {
+    dispatch({
+        type: SET_DISPLAY_WALLET,
+        payload: displayAddress,
+    })
 }

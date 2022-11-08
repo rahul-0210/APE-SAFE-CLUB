@@ -1,36 +1,36 @@
-.sidebar-main{
+.sidebar-main {
     width: 320px;
     height: 100vh;
     backdrop-filter: blur(20px);
     background-color: #0000007a;
-    color:#fff;
+    color: #fff;
     display: flex;
     z-index: 998 !important;
     flex-direction: column;
-    -webkit-transition: .5s ease-in-out;
-    -moz-transition: .5s ease-in-out;
-    -o-transition: .5s ease-in-out;
-    transition: .5s ease-in-out;
-    @media screen and (min-width: 993px) and ( max-width: 1200px) {
-    width: 320px;
+    -webkit-transition: 0.5s ease-in-out;
+    -moz-transition: 0.5s ease-in-out;
+    -o-transition: 0.5s ease-in-out;
+    transition: 0.5s ease-in-out;
+    @media screen and (min-width: 993px) and (max-width: 1200px) {
+        width: 320px;
     }
-    .logo{
+    .logo {
         // margin-bottom: 5px;
         padding: 15px 25px;
-        a{
+        a {
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        img{
+        img {
             height: 100px;
             width: 100px;
         }
-        p{
+        p {
             display: none;
-        }   
+        }
     }
-    .footerLinks{
+    .footerLinks {
         margin-top: auto !important;
         bottom: 0;
         display: flex;
@@ -38,66 +38,65 @@
         position: fixed;
         width: 320px;
     }
-    .footerLinks img{
+    .footerLinks img {
         height: 20px;
         width: 20px;
         margin: 5px;
-        @media screen and (min-width: 993px) and ( max-width: 1200px) {
-            margin: 4px;       
+        @media screen and (min-width: 993px) and (max-width: 1200px) {
+            margin: 4px;
         }
     }
-    .nav-list{
-        ul{
+    .nav-list {
+        ul {
             height: 85vh;
             overflow-y: scroll;
             list-style: none;
             display: flex;
             flex-direction: column;
-            
-            .li{
+
+            .li {
                 font-size: 14px;
                 font-weight: 500px;
                 padding: 15px 25px;
-                color: #F6F6F6;
+                color: #f6f6f6;
                 text-decoration: none;
                 &:hover {
-                    color:#768193;
-                    background: #F6F6F6;
+                    color: #768193;
+                    background: #f6f6f6;
                 }
-           }
-           .active-class{
-                color:#0A2148;
+            }
+            .active-class {
+                color: #0a2148;
                 border-left: 5px solid #142c48;
                 padding-left: 20px;
             }
-            p{
+            p {
                 cursor: pointer;
-            }    
+            }
         }
     }
-    .sidebartoggle{
+    .sidebartoggle {
         position: absolute;
         top: 28px;
         left: 170px;
         width: 30px;
         height: 25px;
         z-index: 1000px;
-        -webkit-transition: .5s ease-in-out;
-        -moz-transition: .5s ease-in-out;
-        -o-transition: .5s ease-in-out;
-        transition: .5s ease-in-out;
+        -webkit-transition: 0.5s ease-in-out;
+        -moz-transition: 0.5s ease-in-out;
+        -o-transition: 0.5s ease-in-out;
+        transition: 0.5s ease-in-out;
         .burger-icon {
             height: 4px;
-            background: #0A2148;
+            background: #0a2148;
             width: 30px;
             margin-bottom: 7px;
         }
     }
-
 }
-.leftToggle{
+.leftToggle {
     margin-left: -320px;
-    .sidebartoggle{
+    .sidebartoggle {
         position: absolute;
         top: 28px;
         left: 270px;
@@ -107,76 +106,75 @@
 
         .burger-icon {
             height: 4px;
-            background: #0A2148;
+            background: #0a2148;
             width: 30px;
             margin-bottom: 7px;
         }
     }
 }
-@media screen and (max-width:992px) {
-    .sidebar-main{
+@media screen and (max-width: 992px) {
+    .sidebar-main {
         position: fixed;
         transform: translateX(-100%);
         overflow: hidden;
         z-index: 10;
 
-        .logo{
+        .logo {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            p{
+            p {
                 display: block;
                 font-size: 25px;
                 font-weight: bold;
             }
         }
     }
-    .extended{
+    .extended {
         transform: translateX(0%);
-        
     }
-    .leftToggle{
+    .leftToggle {
         margin-left: 0;
-        .sidebartoggle{
+        .sidebartoggle {
             display: none;
         }
     }
 }
 
-.nav-link{
+.nav-link {
     font-size: 14px;
     font-weight: 500px;
-    padding: 10px;   
-    color: #F6F6F6;
+    padding: 10px;
+    color: #f6f6f6;
     text-decoration: none;
     &:hover {
         color: #398df5;
-        .link-box{
-            .subtext{
+        .link-box {
+            .subtext {
                 color: #398df5;
             }
         }
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     }
-    .link-box{
+    .link-box {
         display: flex;
         align-items: center;
-        > div:nth-child(1){
+        > div:nth-child(1) {
             // background-color: #F2F5FC;
             height: 50px;
             width: 50px;
             min-width: 50px;
             border-radius: 10px;
             text-align: center;
-            img{
+            img {
                 padding: 10px;
                 height: 100%;
             }
         }
-        > div:nth-child(2){
+        > div:nth-child(2) {
             padding-left: 10px;
             font-weight: bold;
-            .subtext{
+            .subtext {
                 font-weight: normal;
                 font-size: 12px;
             }
@@ -184,21 +182,21 @@
     }
 }
 
-.active-nav-link{
+.active-nav-link {
     color: #398df5;
     padding-left: 5px;
     border: 1px solid #398df5;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
-.divider{
+.divider {
     margin-top: 3px;
     margin-bottom: 3px;
     height: 1px;
     border-bottom: 1px solid #dee0e2;
 }
 
-.external-link-icon{
+.external-link-icon {
     max-width: 20px;
     opacity: 0.5;
 }

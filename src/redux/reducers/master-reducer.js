@@ -1,17 +1,17 @@
-import { SET_SIDEBAR_OPEN } from "../types";
+import {SET_SIDEBAR_OPEN} from '../types'
 
 const masterReducer = (
-  state = {
-    sidebarOpen: false,
-  },
-  action
+    state = {
+        sidebarOpen: false,
+    },
+    action
 ) => {
-  switch (action.type) {
-    case SET_SIDEBAR_OPEN:
-      return { ...state, sidebarOpen: action.status };
-    default:
-      return state;
-  }
-};
+    switch (action.type) {
+        case SET_SIDEBAR_OPEN:
+            return {...state, sidebarOpen: action.status}
+        default:
+            return state
+    }
+}
 
-export default masterReducer;
+export default masterReducer
