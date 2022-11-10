@@ -8,7 +8,7 @@ import {
     TableRow,
     Grid,
 } from '@material-ui/core'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import PageHeader from '../components/PageHeader'
 import silverCoin from '../assets/silvercoin.png'
 import goldCoin from '../assets/goldCoin.png'
@@ -19,26 +19,48 @@ import DialogTitle from '@mui/material/DialogTitle'
 import Slide from '@mui/material/Slide'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import {useTheme} from '@mui/material/styles'
+import {getGameData, resetGameData} from '../redux/actions/coin-flip-action'
+import {useDispatch, useSelector} from 'react-redux'
+import {useSnackbar} from 'notistack'
+import {createGame} from '../utils/contractMethods/coinFlip'
+import {setLoaderDisplay} from '../redux/actions/master-actions'
 
+let dataInterval
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />
 })
 export default function CoinFlip() {
+    const {enqueueSnackbar} = useSnackbar()
+
     const [openCreateDailog, setOpenCreateDailog] = useState(false)
     const [openWatchDailog, setOpenWatchDailog] = useState(false)
     const [openJoinDailog, setOpenJoinDailog] = useState(false)
-    const [betAmount, setBetAmount] = useState('')
-    const [selectedCoin, setSelectedCoin] = useState('')
-    const [flipResult, setFlipResult] = useState('')
+    const [betAmount, setBetAmount] = useState(0)
+    const [selectedCoin, setSelectedCoin] = useState(null)
+    const [flipResult, setFlipResult] = useState(null)
 
-    const [watchModalDetails, setWatchModalDetails] = useState({
-        coin: 'glod',
-        amount: 10,
-        address: '0x1457d8DcD08f2865394949eCCE0b7Dd4D8c01697',
-    })
+    const [watchModalDetails, setWatchModalDetails] = useState([])
+    const dispatch = useDispatch()
+    const {walletAddress} = useSelector((state) => state.wallet)
+    const {userTokenBal, coinFlipTableData} = useSelector(
+        (state) => state.conFlipReducer
+    )
+    useEffect(() => {
+        if (walletAddress) {
+            dataInterval = setInterval(() => {
+                dispatch(getGameData(walletAddress))
+            }, 2000)
+        } else {
+            clearInterval(dataInterval)
+            dispatch(resetGameData())
+        }
+        return () => {
+            clearInterval(dataInterval)
+        }
+    }, [walletAddress])
     const coin = {
-        GOLD: 'gold',
-        SILVER: 'silver',
+        GOLD: true,
+        SILVER: false,
     }
     const theme = useTheme()
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
@@ -52,6 +74,43 @@ export default function CoinFlip() {
             console.log('tails')
         }
     }
+
+    const createBet = async () => {
+        try {
+            if (selectedCoin === null) {
+                enqueueSnackbar('Please select coin', {
+                    variant: 'error',
+                })
+                return
+            }
+            if (!betAmount) {
+                enqueueSnackbar('please select Amount', {
+                    variant: 'error',
+                })
+                return
+            }
+            if (betAmount > userTokenBal) {
+                enqueueSnackbar('Bet Amout is more than users balance', {
+                    variant: 'error',
+                })
+                return
+            }
+            dispatch(setLoaderDisplay(true, true))
+            let result = await createGame(
+                selectedCoin,
+                betAmount,
+                walletAddress
+            )
+            dispatch(setLoaderDisplay(true, true))
+            enqueueSnackbar('Bet Placed Successfully', {
+                variant: 'success',
+            })
+        } catch (error) {
+            console.log('%c Line:82 🍉 error', 'color:#f5ce50', error)
+            dispatch(setLoaderDisplay(true, true))
+        }
+    }
+    
     const createCoinFlipModal = () => {
         return (
             <Dialog
@@ -197,7 +256,7 @@ export default function CoinFlip() {
                                     <div
                                         className="btn-animate"
                                         onClick={() => {
-                                            setBetAmount(2000)
+                                            setBetAmount(userTokenBal)
                                         }}
                                     >
                                         <div className="text">Max</div>
@@ -206,7 +265,10 @@ export default function CoinFlip() {
                             </Grid>
                         </Grid>
                         <Grid item lg={12} className="center">
-                            <button className="btn gradient-btn">
+                            <button
+                                className="btn gradient-btn"
+                                onClick={createBet}
+                            >
                                 Create Game
                             </button>
                         </Grid>
@@ -250,7 +312,7 @@ export default function CoinFlip() {
                             className="center"
                             style={{flexDirection: 'column'}}
                         >
-                            {watchModalDetails?.coin === coin.GOLD ? (
+                            {watchModalDetails[4] === coin.GOLD ? (
                                 <img
                                     className={
                                         selectedCoin === coin.GOLD
@@ -277,19 +339,23 @@ export default function CoinFlip() {
                                 spacing={2}
                             >
                                 <Grid item style={{textAlign: 'right'}} lg={6}>
-                                    <img src={coins} width={50} />
+                                    <img
+                                        src={coins}
+                                        width={50}
+                                        alt="coin img"
+                                    />
                                 </Grid>
                                 <Grid
                                     item
                                     style={{alignItems: 'center'}}
                                     lg={6}
                                 >
-                                    {watchModalDetails.amount}
+                                    {watchModalDetails[3] / 10 ** 18} ASC
                                 </Grid>
                             </Grid>
                         </Grid>
                         <Grid item lg={8} className="center">
-                            {watchModalDetails.address}
+                            {watchModalDetails[0]}
                         </Grid>
                         <Grid item lg={12} className="center">
                             <button
@@ -343,14 +409,18 @@ export default function CoinFlip() {
                                 textAlign: 'center',
                             }}
                         >
-                            {watchModalDetails.address}
+                            {watchModalDetails[0]}
                             <Grid
                                 container
                                 style={{marginTop: '1rem'}}
                                 spacing={2}
                             >
                                 <Grid item style={{textAlign: 'right'}} lg={6}>
-                                    <img src={coins} width={50} />
+                                    <img
+                                        src={coins}
+                                        width={50}
+                                        alt="coin img"
+                                    />
                                 </Grid>
                                 <Grid
                                     item
@@ -361,7 +431,7 @@ export default function CoinFlip() {
                                     }}
                                     lg={6}
                                 >
-                                    {watchModalDetails.amount}
+                                    {watchModalDetails[3] / 10 ** 18} ASC
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -405,14 +475,18 @@ export default function CoinFlip() {
                                 textAlign: 'center',
                             }}
                         >
-                            {watchModalDetails.address}
+                            {walletAddress}
                             <Grid
                                 container
                                 style={{marginTop: '1rem'}}
                                 spacing={2}
                             >
                                 <Grid item style={{textAlign: 'right'}} lg={6}>
-                                    <img src={coins} width={50} />
+                                    <img
+                                        src={coins}
+                                        width={50}
+                                        alt="coin img"
+                                    />
                                 </Grid>
                                 <Grid
                                     item
@@ -423,7 +497,7 @@ export default function CoinFlip() {
                                     }}
                                     lg={6}
                                 >
-                                    {watchModalDetails.amount}
+                                    {watchModalDetails[3] / 10 ** 18} ASC
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -466,7 +540,7 @@ export default function CoinFlip() {
                                     className="table-header"
                                     align="center"
                                 >
-                                    Status
+                                    Amount
                                 </TableCell>
                                 <TableCell
                                     component="th"
@@ -478,45 +552,76 @@ export default function CoinFlip() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <TableRow key={1} className="table-row">
-                                <TableCell
-                                    className="table-row"
-                                    component="td"
-                                    scope="row"
-                                >
-                                    0x1457d8DcD08f2865394949eCCE0b7Dd4D8c01697
-                                </TableCell>
-                                <TableCell className="table-row" align="center">
-                                    <img src={silverCoin} width={75} />
-                                </TableCell>
-                                <TableCell className="table-row" align="right">
-                                    Open
-                                </TableCell>
-                                <TableCell className="table-row" align="right">
-                                    <Grid container spacing={2}>
-                                        <Grid item lg={6} md={12}>
-                                            <button
-                                                className="btn gradient-btn w-100"
-                                                onClick={() => {
-                                                    setOpenJoinDailog(true)
-                                                }}
-                                            >
-                                                Join
-                                            </button>
-                                        </Grid>
-                                        <Grid item lg={6} md={12}>
-                                            <button
-                                                className="btn border-gradient border-gradient-secondary w-100"
-                                                onClick={() =>
-                                                    setOpenWatchDailog(true)
-                                                }
-                                            >
-                                                Watch
-                                            </button>
-                                        </Grid>
-                                    </Grid>
-                                </TableCell>
-                            </TableRow>
+                            {coinFlipTableData && coinFlipTableData.length
+                                ? coinFlipTableData.map((cp) => (
+                                      <TableRow key={1} className="table-row">
+                                          <TableCell
+                                              className="table-row"
+                                              component="td"
+                                              scope="row"
+                                          >
+                                              {cp[0]}
+                                          </TableCell>
+                                          <TableCell
+                                              className="table-row"
+                                              align="center"
+                                          >
+                                              <img
+                                                  src={
+                                                      cp[4]
+                                                          ? goldCoin
+                                                          : silverCoin
+                                                  }
+                                                  width={75}
+                                                  alt="user coin"
+                                              />
+                                          </TableCell>
+                                          <TableCell
+                                              className="table-row"
+                                              align="right"
+                                          >
+                                              {cp[3] / 10 ** 18}
+                                          </TableCell>
+                                          <TableCell
+                                              className="table-row"
+                                              align="right"
+                                          >
+                                              <Grid container spacing={2}>
+                                                  <Grid item lg={6} md={12}>
+                                                      <button
+                                                          className="btn gradient-btn w-100"
+                                                          onClick={() => {
+                                                              setWatchModalDetails(
+                                                                  cp
+                                                              )
+                                                              setOpenJoinDailog(
+                                                                  true
+                                                              )
+                                                          }}
+                                                      >
+                                                          Join
+                                                      </button>
+                                                  </Grid>
+                                                  <Grid item lg={6} md={12}>
+                                                      <button
+                                                          className="btn border-gradient border-gradient-secondary w-100"
+                                                          onClick={() => {
+                                                              setWatchModalDetails(
+                                                                  cp
+                                                              )
+                                                              setOpenWatchDailog(
+                                                                  true
+                                                              )
+                                                          }}
+                                                      >
+                                                          Watch
+                                                      </button>
+                                                  </Grid>
+                                              </Grid>
+                                          </TableCell>
+                                      </TableRow>
+                                  ))
+                                : null}
                         </TableBody>
                     </Table>
                 </TableContainer>

@@ -8,28 +8,23 @@ import {DashboardLayout} from './components/layouts/DashboardLayout'
 import ConnectWallet from './pages/connectWallet'
 import CoinFlip from './pages/coinFlip'
 import RollDice from './pages/rollDice'
-// import coinFlip from "./pages/coinFlip";
-// import rollDice from "./pages/rollDice";
-// import LoaderComponent from "./components/loaderComponent";
-// import { connectionAction } from "./redux/actions/connectionAction";
+import { setWalletConnectionStatus } from './redux/actions/wallet'
+import LoaderComponent from './components/loaderComponent'
 
 function App() {
     const {enqueueSnackbar} = useSnackbar()
-    // const { activateBrowserWallet, account } = useEthers()
     const history = useHistory()
     const dispatch = useDispatch()
-    // const isConnected = useSelector((state) => state.connectionReducer)
-    const {walletAddress, walletConnectionStatus, displayWalletAddress} = useSelector((state) => state.wallet)
-
-    // useEffect(() => {
-    //   if (!account) {
-    //     dispatch(connectionAction(false));
-    //       history.push('/')
-    //   }
-    // }, [account, dispatch, history]);
+    const {walletAddress, walletConnectionStatus} = useSelector((state) => state.wallet)
 
     useEffect(() => {
-        // activateBrowserWallet();
+      if (!walletAddress) {
+        dispatch(setWalletConnectionStatus(false));
+          history.push('/')
+      }
+    }, [walletAddress, walletConnectionStatus, dispatch, history]);
+
+    useEffect(() => {
         document.addEventListener(
             'keydown',
             function (e) {
@@ -59,10 +54,11 @@ function App() {
             },
             false
         )
-    }, [])
+    }, [enqueueSnackbar])
 
     return (
         <div className="App g-sidenav-show  bg-gray-100">
+            <LoaderComponent />
             <Switch>
                 <Route path="*">
                     <DashboardLayout>

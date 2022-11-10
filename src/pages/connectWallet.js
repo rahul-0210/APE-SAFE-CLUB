@@ -17,8 +17,9 @@ export default function ConnectWallet() {
     const {active, account, activate, deactivate, chainId} = useWeb3React()
     const dispatch = useDispatch()
     const {enqueueSnackbar} = useSnackbar()
-    const {walletAddress, walletConnectionStatus, displayWalletAddress} =
-        useSelector((state) => state.wallet)
+    const {walletAddress, walletConnectionStatus} = useSelector(
+        (state) => state.wallet
+    )
     const [getHelpClicked, setGetHelpClicked] = React.useState(false)
     const isMobile =
         /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -30,6 +31,11 @@ export default function ConnectWallet() {
             dispatch(setWalletConnectionStatus(active))
             if (active && account) {
                 dispatch(setWalletAddress(account))
+                dispatch(
+                    setDisplayWalletAdress(
+                        `${account.slice(0, 8)}...${account.slice(-4)}`
+                    )
+                )
             } else {
                 dispatch(setWalletAddress(''))
             }
@@ -44,6 +50,11 @@ export default function ConnectWallet() {
             } else {
                 if (active && account) {
                     dispatch(setWalletAddress(account))
+                    dispatch(
+                        setDisplayWalletAdress(
+                            `${account.slice(0, 8)}...${account.slice(-4)}`
+                        )
+                    )
                 } else {
                     dispatch(setWalletAddress(''))
                 }
