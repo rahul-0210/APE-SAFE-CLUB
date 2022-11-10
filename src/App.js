@@ -8,53 +8,55 @@ import {DashboardLayout} from './components/layouts/DashboardLayout'
 import ConnectWallet from './pages/connectWallet'
 import CoinFlip from './pages/coinFlip'
 import RollDice from './pages/rollDice'
-import { setWalletConnectionStatus } from './redux/actions/wallet'
+import {setWalletConnectionStatus} from './redux/actions/wallet'
 import LoaderComponent from './components/loaderComponent'
 
 function App() {
     const {enqueueSnackbar} = useSnackbar()
     const history = useHistory()
     const dispatch = useDispatch()
-    const {walletAddress, walletConnectionStatus} = useSelector((state) => state.wallet)
+    const {walletAddress, walletConnectionStatus} = useSelector(
+        (state) => state.wallet
+    )
 
     useEffect(() => {
-      if (!walletAddress) {
-        dispatch(setWalletConnectionStatus(false));
-          history.push('/')
-      }
-    }, [walletAddress, walletConnectionStatus, dispatch, history]);
+        if (!walletAddress) {
+            dispatch(setWalletConnectionStatus(false))
+            history.push('/')
+        }
+    }, [walletAddress, walletConnectionStatus, dispatch, history])
 
-    useEffect(() => {
-        document.addEventListener(
-            'keydown',
-            function (e) {
-                if (e.key === 'F12') {
-                    enqueueSnackbar(
-                        'This function has been disabled for security reasons!',
-                        {
-                            variant: 'warning',
-                        }
-                    )
-                    e.preventDefault()
-                }
-            },
-            false
-        )
+    // useEffect(() => {
+    //     document.addEventListener(
+    //         'keydown',
+    //         function (e) {
+    //             if (e.key === 'F12') {
+    //                 enqueueSnackbar(
+    //                     'This function has been disabled for security reasons!',
+    //                     {
+    //                         variant: 'warning',
+    //                     }
+    //                 )
+    //                 e.preventDefault()
+    //             }
+    //         },
+    //         false
+    //     )
 
-        document.addEventListener(
-            'contextmenu',
-            function (e) {
-                enqueueSnackbar(
-                    'This function has been disabled for security reasons!',
-                    {
-                        variant: 'warning',
-                    }
-                )
-                e.preventDefault()
-            },
-            false
-        )
-    }, [enqueueSnackbar])
+    //     document.addEventListener(
+    //         'contextmenu',
+    //         function (e) {
+    //             enqueueSnackbar(
+    //                 'This function has been disabled for security reasons!',
+    //                 {
+    //                     variant: 'warning',
+    //                 }
+    //             )
+    //             e.preventDefault()
+    //         },
+    //         false
+    //     )
+    // }, [enqueueSnackbar])
 
     return (
         <div className="App g-sidenav-show  bg-gray-100">

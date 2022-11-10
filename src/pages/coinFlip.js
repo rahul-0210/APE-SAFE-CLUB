@@ -22,7 +22,7 @@ import {useTheme} from '@mui/material/styles'
 import {getGameData, resetGameData} from '../redux/actions/coin-flip-action'
 import {useDispatch, useSelector} from 'react-redux'
 import {useSnackbar} from 'notistack'
-import {createGame} from '../utils/contractMethods/coinFlip'
+import {createGame, startTossingGame} from '../utils/contractMethods/coinFlip'
 import {setLoaderDisplay} from '../redux/actions/master-actions'
 
 let dataInterval
@@ -34,7 +34,10 @@ export default function CoinFlip() {
 
     const [openCreateDailog, setOpenCreateDailog] = useState(false)
     const [openWatchDailog, setOpenWatchDailog] = useState(false)
-    const [openJoinDailog, setOpenJoinDailog] = useState(false)
+    const [openJoinDailog, setOpenJoinDailog] = useState({
+        gameCount: null,
+        isOpen: false,
+    })
     const [betAmount, setBetAmount] = useState(0)
     const [selectedCoin, setSelectedCoin] = useState(null)
     const [flipResult, setFlipResult] = useState(null)
@@ -45,6 +48,7 @@ export default function CoinFlip() {
     const {userTokenBal, coinFlipTableData} = useSelector(
         (state) => state.conFlipReducer
     )
+
     useEffect(() => {
         if (walletAddress) {
             dataInterval = setInterval(() => {
@@ -58,21 +62,36 @@ export default function CoinFlip() {
             clearInterval(dataInterval)
         }
     }, [walletAddress])
+
     const coin = {
         GOLD: true,
         SILVER: false,
     }
+
     const theme = useTheme()
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
 
-    const coinToss = () => {
-        if (Math.random() < 0.5) {
-            setFlipResult('heads')
-            console.log('heads')
-        } else {
-            setFlipResult('tails')
-            console.log('tails')
+    const coinToss = async (gameCount) => {
+        try {
+            const result = await startTossingGame(gameCount, walletAddress)
+            console.log('result', result)
+            setOpenJoinDailog({
+                gameCount: null,
+                isOpen: false,
+            })
+        } catch (err) {
+            console.log('err', err)
+            enqueueSnackbar('Something went wrong', {
+                variant: 'error',
+            })
         }
+        // if (Math.random() < 0.5) {
+        //     setFlipResult('heads')
+        //     console.log('heads')
+        // } else {
+        //     setFlipResult('tails')
+        //     console.log('tails')
+        // }
     }
 
     const createBet = async () => {
@@ -110,7 +129,7 @@ export default function CoinFlip() {
             dispatch(setLoaderDisplay(true, true))
         }
     }
-    
+
     const createCoinFlipModal = () => {
         return (
             <Dialog
@@ -375,8 +394,10 @@ export default function CoinFlip() {
         return (
             <Dialog
                 fullScreen={fullScreen}
-                open={openJoinDailog}
-                onClose={() => setOpenJoinDailog(false)}
+                open={openJoinDailog.isOpen}
+                onClose={() =>
+                    setOpenJoinDailog({gameCount: null, isOpen: false})
+                }
                 aria-labelledby="responsive-dialog-title"
                 TransitionComponent={Transition}
                 PaperProps={{
@@ -442,14 +463,14 @@ export default function CoinFlip() {
                             style={{flexDirection: 'column'}}
                         >
                             <div id="coin" className={flipResult}>
-                                <div class="side-a">
+                                <div className="side-a">
                                     <img
                                         width="100"
                                         src={goldCoin}
                                         alt="gold-coin"
                                     />
                                 </div>
-                                <div class="side-b">
+                                <div className="side-b">
                                     <img
                                         width="100"
                                         src={silverCoin}
@@ -460,7 +481,9 @@ export default function CoinFlip() {
                             <button
                                 className="btn gradient-btn"
                                 style={{marginTop: '0.5rem'}}
-                                onClick={coinToss}
+                                onClick={() =>
+                                    coinToss(openJoinDailog.gameCount)
+                                }
                             >
                                 Coin Toss
                             </button>
@@ -506,6 +529,7 @@ export default function CoinFlip() {
             </Dialog>
         )
     }
+
     return (
         <Box sx={{p: 5}} className="coin-flip">
             {createCoinFlipModal()}
@@ -553,8 +577,11 @@ export default function CoinFlip() {
                         </TableHead>
                         <TableBody>
                             {coinFlipTableData && coinFlipTableData.length
-                                ? coinFlipTableData.map((cp) => (
-                                      <TableRow key={1} className="table-row">
+                                ? coinFlipTableData.map((cp, index) => (
+                                      <TableRow
+                                          key={index}
+                                          className="table-row"
+                                      >
                                           <TableCell
                                               className="table-row"
                                               component="td"
@@ -595,7 +622,11 @@ export default function CoinFlip() {
                                                                   cp
                                                               )
                                                               setOpenJoinDailog(
-                                                                  true
+                                                                  {
+                                                                      gameCount:
+                                                                          index,
+                                                                      isOpen: true,
+                                                                  }
                                                               )
                                                           }}
                                                       >
