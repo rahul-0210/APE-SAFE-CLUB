@@ -67,7 +67,6 @@ export const createGame = async (side, amount, userAddress) => {
 export const startTossingGame = async (gameCount, userAddress) => {
     try {
         const amount = await isApproved(userAddress)
-        console.log('amount', amount)
         if (!+amount) {
             const res = await approve(userAddress)
             console.log('res', res)
@@ -76,7 +75,9 @@ export const startTossingGame = async (gameCount, userAddress) => {
             .takeBet(gameCount)
             .send({from: userAddress})
         console.log('result', result)
-        return result
+        const eventData = result.events?.WinnerAnnounced?.returnValues
+        console.log('eventData', eventData)
+        return eventData
     } catch (error) {
         throw error
     }
@@ -86,35 +87,6 @@ export const approve = async (userAddress) => {
     let amount = 10000000000 * 10 ** 18
     amount = setAmountProperly(amount.toString())
     try {
-        // const minABI = [
-        //     {
-        //         constant: false,
-        //         inputs: [
-        //             {
-        //                 name: '_spender',
-        //                 type: 'address',
-        //             },
-        //             {
-        //                 name: '_value',
-        //                 type: 'uint256',
-        //             },
-        //         ],
-        //         name: 'approve',
-        //         outputs: [
-        //             {
-        //                 name: '',
-        //                 type: 'bool',
-        //             },
-        //         ],
-        //         payable: false,
-        //         stateMutability: 'nonpayable',
-        //         type: 'function',
-        //     },
-        // ]
-        // const tokenContract = new web3.eth.Contract(
-        //     minABI,
-        //     coinFlipTokenAddress
-        // )
         let result = await tokenContract.methods
             .approve(coinFlipContractAddress, amount)
             .send({from: userAddress})
@@ -136,9 +108,11 @@ export const isApproved = async (userAddress) => {
     }
 }
 
-export const getAllGames = async () => {
+export const getAllGames = async (userAddress) => {
     try {
-        const result = await coinFlipContract.methods.getAllGames().call()
+        const result = await coinFlipContract.methods
+            .getAllGames()
+            .call({from: userAddress})
         return result
     } catch (error) {
         throw error

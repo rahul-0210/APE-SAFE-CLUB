@@ -1,43 +1,42 @@
-import { userBalance, getAllGames } from '../../utils/contractMethods/coinFlip';
+import {userBalance, getAllGames} from '../../utils/contractMethods/coinFlip'
 import {USER_TOKEN_BALANCE, COIN_FLIP_GAME_TABLE_DATA} from '../types'
 
-
-export const getGameData = (userAddress) => dispatch => {
-    dispatch(getUserTokenBalance(userAddress));
-    dispatch(getAllGamesData(userAddress));
+export const getGameData = (userAddress) => (dispatch) => {
+    dispatch(getUserTokenBalance(userAddress))
+    dispatch(getAllGamesData(userAddress))
 }
 
-export const getUserTokenBalance = userAddress => async dispatch => {
+export const getUserTokenBalance = (userAddress) => async (dispatch) => {
     try {
-        let rest = await userBalance(userAddress);
+        let rest = await userBalance(userAddress)
         dispatch({
             type: USER_TOKEN_BALANCE,
-            payload: rest
+            payload: rest,
         })
     } catch (error) {
-        console.log("%c Line:17 🥒 error", "color:#7f2b82", error);
+        console.log('%c Line:17 🥒 error', 'color:#7f2b82', error)
     }
 }
 
-export const getAllGamesData = userAddress => async dispatch => {
+export const getAllGamesData = (userAddress) => async (dispatch) => {
     try {
-        let rest = await getAllGames();
+        let rest = await getAllGames(userAddress)
         dispatch({
             type: COIN_FLIP_GAME_TABLE_DATA,
-            payload: rest
+            payload: rest,
         })
     } catch (error) {
-        console.log("%c Line:30 🥑 error", "color:#ed9ec7", error);
+        console.log('%c Line:30 🥑 error', 'color:#ed9ec7', error)
     }
 }
 
-export const resetGameData = () => dispatch => {
+export const resetGameData = () => (dispatch) => {
     dispatch({
         type: USER_TOKEN_BALANCE,
-        payload: ""
-    });
+        payload: '',
+    })
     dispatch({
         type: COIN_FLIP_GAME_TABLE_DATA,
-        payload: []
+        payload: [],
     })
 }

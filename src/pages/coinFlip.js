@@ -35,12 +35,13 @@ export default function CoinFlip() {
     const [openCreateDailog, setOpenCreateDailog] = useState(false)
     const [openWatchDailog, setOpenWatchDailog] = useState(false)
     const [openJoinDailog, setOpenJoinDailog] = useState({
-        gameCount: null,
+        gameData: null,
         isOpen: false,
     })
     const [betAmount, setBetAmount] = useState(0)
     const [selectedCoin, setSelectedCoin] = useState(null)
     const [flipResult, setFlipResult] = useState(null)
+    const [isGameCreated, setIsGameCreated] = useState(false)
 
     const [watchModalDetails, setWatchModalDetails] = useState([])
     const dispatch = useDispatch()
@@ -50,18 +51,20 @@ export default function CoinFlip() {
     )
 
     useEffect(() => {
-        if (walletAddress) {
-            dataInterval = setInterval(() => {
-                dispatch(getGameData(walletAddress))
-            }, 2000)
+        if (walletAddress || isGameCreated) {
+            dispatch(getGameData(walletAddress))
+            setIsGameCreated(false)
+            // dataInterval = setInterval(() => {
+            //     dispatch(getGameData(walletAddress))
+            // }, 2000)
         } else {
-            clearInterval(dataInterval)
+            // clearInterval(dataInterval)
             dispatch(resetGameData())
         }
         return () => {
             clearInterval(dataInterval)
         }
-    }, [walletAddress])
+    }, [walletAddress, isGameCreated])
 
     const coin = {
         GOLD: true,
@@ -71,27 +74,29 @@ export default function CoinFlip() {
     const theme = useTheme()
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
 
-    const coinToss = async (gameCount) => {
+    const coinToss = async (gameData) => {
         try {
-            const result = await startTossingGame(gameCount, walletAddress)
-            console.log('result', result)
-            setOpenJoinDailog({
-                gameCount: null,
-                isOpen: false,
-            })
+            const result = await startTossingGame(
+                gameData.gameCount,
+                walletAddress
+            )
+            if (result.winner === gameData.player1) {
+                if (gameData.coinSide) setFlipResult('heads')
+                else if (!gameData.coinSide) setFlipResult('tails')
+            } else if (result.winner === walletAddress) {
+                if (gameData.coinSide) setFlipResult('tails')
+                else if (!gameData.coinSide) setFlipResult('heads')
+            }
+            // setOpenJoinDailog({
+            //     gameData: null,
+            //     isOpen: false,
+            // })
         } catch (err) {
             console.log('err', err)
             enqueueSnackbar('Something went wrong', {
                 variant: 'error',
             })
         }
-        // if (Math.random() < 0.5) {
-        //     setFlipResult('heads')
-        //     console.log('heads')
-        // } else {
-        //     setFlipResult('tails')
-        //     console.log('tails')
-        // }
     }
 
     const createBet = async () => {
@@ -120,13 +125,15 @@ export default function CoinFlip() {
                 betAmount,
                 walletAddress
             )
-            dispatch(setLoaderDisplay(true, true))
+            if (result) setIsGameCreated(true)
+            dispatch(setLoaderDisplay(false, false))
+            setOpenCreateDailog(false)
             enqueueSnackbar('Bet Placed Successfully', {
                 variant: 'success',
             })
         } catch (error) {
             console.log('%c Line:82 🍉 error', 'color:#f5ce50', error)
-            dispatch(setLoaderDisplay(true, true))
+            dispatch(setLoaderDisplay(false, false))
         }
     }
 
@@ -396,7 +403,7 @@ export default function CoinFlip() {
                 fullScreen={fullScreen}
                 open={openJoinDailog.isOpen}
                 onClose={() =>
-                    setOpenJoinDailog({gameCount: null, isOpen: false})
+                    setOpenJoinDailog({gameData: null, isOpen: false})
                 }
                 aria-labelledby="responsive-dialog-title"
                 TransitionComponent={Transition}
@@ -452,7 +459,8 @@ export default function CoinFlip() {
                                     }}
                                     lg={6}
                                 >
-                                    {watchModalDetails[3] / 10 ** 18} ASC
+                                    {+watchModalDetails.betAmount / 10 ** 18}{' '}
+                                    ASC
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -482,7 +490,7 @@ export default function CoinFlip() {
                                 className="btn gradient-btn"
                                 style={{marginTop: '0.5rem'}}
                                 onClick={() =>
-                                    coinToss(openJoinDailog.gameCount)
+                                    coinToss(openJoinDailog.gameData)
                                 }
                             >
                                 Coin Toss
@@ -520,7 +528,8 @@ export default function CoinFlip() {
                                     }}
                                     lg={6}
                                 >
-                                    {watchModalDetails[3] / 10 ** 18} ASC
+                                    {+watchModalDetails.betAmount / 10 ** 18}{' '}
+                                    ASC
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -587,7 +596,7 @@ export default function CoinFlip() {
                                               component="td"
                                               scope="row"
                                           >
-                                              {cp[0]}
+                                              {cp.player1}
                                           </TableCell>
                                           <TableCell
                                               className="table-row"
@@ -595,7 +604,7 @@ export default function CoinFlip() {
                                           >
                                               <img
                                                   src={
-                                                      cp[4]
+                                                      cp.coinSide
                                                           ? goldCoin
                                                           : silverCoin
                                                   }
@@ -607,7 +616,7 @@ export default function CoinFlip() {
                                               className="table-row"
                                               align="right"
                                           >
-                                              {cp[3] / 10 ** 18}
+                                              {+cp.betAmount / 10 ** 18}
                                           </TableCell>
                                           <TableCell
                                               className="table-row"
@@ -623,8 +632,8 @@ export default function CoinFlip() {
                                                               )
                                                               setOpenJoinDailog(
                                                                   {
-                                                                      gameCount:
-                                                                          index,
+                                                                      gameData:
+                                                                          cp,
                                                                       isOpen: true,
                                                                   }
                                                               )
