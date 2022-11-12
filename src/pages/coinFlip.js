@@ -507,19 +507,6 @@ export default function CoinFlip() {
                             style={{flexDirection: 'column'}}
                         >
                             <div id="coin" className={flipResult}>
-                                {/* {openJoinDailog?.gameData?.coinSide ? (
-                                    <img
-                                        width="100"
-                                        src={goldCoin}
-                                        alt="gold-coin"
-                                    />
-                                ) : (
-                                    <img
-                                        width="100"
-                                        src={silverCoin}
-                                        alt="gold-coin"
-                                    />
-                                )} */}
                                 <div className="side-a">
                                     <img
                                         width="100"
