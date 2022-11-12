@@ -24,6 +24,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useSnackbar} from 'notistack'
 import {createGame, startTossingGame} from '../utils/contractMethods/coinFlip'
 import {setLoaderDisplay} from '../redux/actions/master-actions'
+import LoaderComponent from '../components/loaderComponent.js'
 
 let dataInterval
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -49,6 +50,7 @@ export default function CoinFlip() {
     const {userTokenBal, coinFlipTableData} = useSelector(
         (state) => state.conFlipReducer
     )
+    console.log('coinFlipTableData', coinFlipTableData)
 
     useEffect(() => {
         if (walletAddress || isGameCreated) {
@@ -76,24 +78,41 @@ export default function CoinFlip() {
 
     const coinToss = async (gameData) => {
         try {
+            dispatch(setLoaderDisplay(true, true))
             const result = await startTossingGame(
                 gameData.gameCount,
                 walletAddress
             )
+            dispatch(setLoaderDisplay(false, false))
             if (result) setIsGameCreated(true)
             if (result.winner === gameData.player1) {
                 if (gameData.coinSide) setFlipResult('heads')
                 else if (!gameData.coinSide) setFlipResult('tails')
+                setTimeout(() => {
+                    enqueueSnackbar('Sorry! Try your luck again.', {
+                        variant: 'error',
+                    })
+                }, 3000)
+                // setOpenJoinDailog({
+                //     gameData: null,
+                //     isOpen: false,
+                // })
             } else if (result.winner === walletAddress) {
                 if (gameData.coinSide) setFlipResult('tails')
                 else if (!gameData.coinSide) setFlipResult('heads')
+                setTimeout(() => {
+                    enqueueSnackbar('Congratulations! You won the game.', {
+                        variant: 'success',
+                    })
+                }, 3000)
+                // setOpenJoinDailog({
+                //     gameData: null,
+                //     isOpen: false,
+                // })
             }
-            // setOpenJoinDailog({
-            //     gameData: null,
-            //     isOpen: false,
-            // })
         } catch (err) {
             console.log('err', err)
+            dispatch(setLoaderDisplay(false, false))
             enqueueSnackbar('Something went wrong', {
                 variant: 'error',
             })
@@ -110,6 +129,12 @@ export default function CoinFlip() {
             }
             if (!betAmount) {
                 enqueueSnackbar('please select Amount', {
+                    variant: 'error',
+                })
+                return
+            }
+            if (betAmount < 10) {
+                enqueueSnackbar('Minimum bet amount is 10', {
                     variant: 'error',
                 })
                 return
@@ -132,6 +157,8 @@ export default function CoinFlip() {
             enqueueSnackbar('Bet Placed Successfully', {
                 variant: 'success',
             })
+            setSelectedCoin(null)
+            setBetAmount(0)
         } catch (error) {
             console.log('%c Line:82 🍉 error', 'color:#f5ce50', error)
             dispatch(setLoaderDisplay(false, false))
@@ -161,6 +188,7 @@ export default function CoinFlip() {
                 className="coin-flip"
                 maxWidth="md"
             >
+                <LoaderComponent />
                 <DialogTitle id="responsive-dialog-title">
                     {'Create Game'}
                 </DialogTitle>
@@ -356,7 +384,11 @@ export default function CoinFlip() {
                                             ? 'coin-img selected'
                                             : 'coin-img'
                                     }
-                                    src={silverCoin}
+                                    src={
+                                        watchModalDetails.coinSide
+                                            ? goldCoin
+                                            : silverCoin
+                                    }
                                     alt="silver coin"
                                 />
                             )}
@@ -377,7 +409,8 @@ export default function CoinFlip() {
                                     style={{alignItems: 'center'}}
                                     lg={6}
                                 >
-                                    {watchModalDetails[3] / 10 ** 18} ASC
+                                    {+watchModalDetails?.betAmount / 10 ** 18}{' '}
+                                    ASC
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -403,9 +436,10 @@ export default function CoinFlip() {
             <Dialog
                 fullScreen={fullScreen}
                 open={openJoinDailog.isOpen}
-                onClose={() =>
+                onClose={() => {
                     setOpenJoinDailog({gameData: null, isOpen: false})
-                }
+                    setFlipResult(null)
+                }}
                 aria-labelledby="responsive-dialog-title"
                 TransitionComponent={Transition}
                 PaperProps={{
@@ -423,6 +457,7 @@ export default function CoinFlip() {
                 className="coin-flip"
                 maxWidth="md"
             >
+                <LoaderComponent />
                 <DialogTitle id="responsive-dialog-title">
                     {'User Game'}
                 </DialogTitle>
@@ -472,10 +507,27 @@ export default function CoinFlip() {
                             style={{flexDirection: 'column'}}
                         >
                             <div id="coin" className={flipResult}>
-                                <div className="side-a">
+                                {/* {openJoinDailog?.gameData?.coinSide ? (
                                     <img
                                         width="100"
                                         src={goldCoin}
+                                        alt="gold-coin"
+                                    />
+                                ) : (
+                                    <img
+                                        width="100"
+                                        src={silverCoin}
+                                        alt="gold-coin"
+                                    />
+                                )} */}
+                                <div className="side-a">
+                                    <img
+                                        width="100"
+                                        src={
+                                            watchModalDetails.coinSide
+                                                ? silverCoin
+                                                : goldCoin
+                                        }
                                         alt="gold-coin"
                                     />
                                 </div>
@@ -490,6 +542,7 @@ export default function CoinFlip() {
                             <button
                                 className="btn gradient-btn"
                                 style={{marginTop: '0.5rem'}}
+                                disabled={flipResult}
                                 onClick={() =>
                                     coinToss(openJoinDailog.gameData)
                                 }
@@ -560,6 +613,13 @@ export default function CoinFlip() {
                                     className="table-header"
                                     align="center"
                                 >
+                                    Game No.
+                                </TableCell>
+                                <TableCell
+                                    component="th"
+                                    className="table-header"
+                                    align="center"
+                                >
                                     Player
                                 </TableCell>
                                 <TableCell
@@ -596,6 +656,14 @@ export default function CoinFlip() {
                                               className="table-row"
                                               component="td"
                                               scope="row"
+                                              align="center"
+                                          >
+                                              {cp.gameCount}
+                                          </TableCell>
+                                          <TableCell
+                                              className="table-row"
+                                              component="td"
+                                              scope="row"
                                           >
                                               {cp.player1}
                                           </TableCell>
@@ -615,7 +683,7 @@ export default function CoinFlip() {
                                           </TableCell>
                                           <TableCell
                                               className="table-row"
-                                              align="right"
+                                              align="center"
                                           >
                                               {+cp.betAmount / 10 ** 18}
                                           </TableCell>
@@ -624,25 +692,28 @@ export default function CoinFlip() {
                                               align="right"
                                           >
                                               <Grid container spacing={2}>
-                                                  <Grid item lg={6} md={12}>
-                                                      <button
-                                                          className="btn gradient-btn w-100"
-                                                          onClick={() => {
-                                                              setWatchModalDetails(
-                                                                  cp
-                                                              )
-                                                              setOpenJoinDailog(
-                                                                  {
-                                                                      gameData:
-                                                                          cp,
-                                                                      isOpen: true,
-                                                                  }
-                                                              )
-                                                          }}
-                                                      >
-                                                          Join
-                                                      </button>
-                                                  </Grid>
+                                                  {cp.player1 !==
+                                                      walletAddress && (
+                                                      <Grid item lg={6} md={12}>
+                                                          <button
+                                                              className="btn gradient-btn w-100"
+                                                              onClick={() => {
+                                                                  setWatchModalDetails(
+                                                                      cp
+                                                                  )
+                                                                  setOpenJoinDailog(
+                                                                      {
+                                                                          gameData:
+                                                                              cp,
+                                                                          isOpen: true,
+                                                                      }
+                                                                  )
+                                                              }}
+                                                          >
+                                                              Join
+                                                          </button>
+                                                      </Grid>
+                                                  )}
                                                   <Grid item lg={6} md={12}>
                                                       <button
                                                           className="btn border-gradient border-gradient-secondary w-100"

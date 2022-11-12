@@ -13,6 +13,7 @@ const Navbar = () => {
     const location = useLocation()
 
     const {sidebarOpen} = useSelector((state) => state.masterReducer)
+    const {walletAddress} = useSelector((state) => state.wallet)
     // const isConnected = useSelector((state) => state.connectionReducer);
     const isConnected = false
 
@@ -46,6 +47,24 @@ const Navbar = () => {
                     </p>
                 </div>
                 <div className="connection">{/* <WalletDropdown /> */}</div>
+                {walletAddress && (
+                    <p
+                        style={{
+                            color: '#fff',
+                            border: '2px solid #fff',
+                            borderRadius: '5px',
+                            padding: '5px',
+                            marginRight: '40px',
+                        }}
+                    >
+                        {walletAddress?.substr(0, 6) +
+                            '...' +
+                            walletAddress?.substr(
+                                walletAddress?.length - 6,
+                                walletAddress?.length
+                            )}
+                    </p>
+                )}
             </div>
         </div>
     )

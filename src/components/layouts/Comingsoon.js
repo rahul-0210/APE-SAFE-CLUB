@@ -14,7 +14,7 @@ const Comingsoon = ({launchpadId, image, title, launchpadData, urlSlug}) => (
             <div className="card-element">
                 <div className="card-content">
                     <div className="soon-block">
-                        <div className="container">
+                        {/* <div className="container">
                             <img
                                 alt="Launching Soon"
                                 className="projectImg"
@@ -22,7 +22,7 @@ const Comingsoon = ({launchpadId, image, title, launchpadData, urlSlug}) => (
                                 height={150}
                                 width={150}
                             />
-                        </div>
+                        </div> */}
                         <h1 className="">{title}</h1>
                         <div className="soon-button ">
                             <h3>Launching Soon</h3>
