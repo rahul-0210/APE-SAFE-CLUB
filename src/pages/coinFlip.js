@@ -80,6 +80,7 @@ export default function CoinFlip() {
                 gameData.gameCount,
                 walletAddress
             )
+            if (result) setIsGameCreated(true)
             if (result.winner === gameData.player1) {
                 if (gameData.coinSide) setFlipResult('heads')
                 else if (!gameData.coinSide) setFlipResult('tails')
