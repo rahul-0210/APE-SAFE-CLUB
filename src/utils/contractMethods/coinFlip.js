@@ -1,13 +1,8 @@
-// import BigNumber from 'bignumber.js';
 import Web3 from 'web3'
 const web3 = new Web3(window.ethereum)
-// const commaNumber = require('comma-number');
 const coinFlipAbi = require('../../abi/coin-flip.json')
 const tokenAbi = require('../../abi/erc20ABI.json')
 
-// BigNumber.config({ DECIMAL_PLACES: 5 });
-// BigNumber.set({ ROUNDING_MODE: BigNumber.ROUND_UP });
-// const format = commaNumber.bindWith(',', '.');
 const coinFlipContractAddress = process.env.REACT_APP_COIN_FLIP_CONTRACT
 const coinFlipTokenAddress = process.env.REACT_APP_COIN_FLIP_TOKEN_ADDRESS
 
@@ -69,7 +64,6 @@ export const startTossingGame = async (gameCount, userAddress) => {
         const amount = await isApproved(userAddress)
         if (!+amount) {
             const res = await approve(userAddress)
-            console.log('res', res)
         }
         const result = await coinFlipContract.methods
             .takeBet(gameCount)
