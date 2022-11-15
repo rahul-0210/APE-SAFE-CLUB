@@ -9,7 +9,6 @@
             height: auto;
         }
         .selected {
-            // border: 1px solid #fff;
             -webkit-box-shadow: inset 0 1px 1px #00000014, 0 0 43px #197ccbeb;
             box-shadow: inset 0 1px 1px #00000014, 0 0 43px #197ccbeb;
         }
@@ -39,11 +38,9 @@
             -webkit-backface-visibility: hidden;
         }
         .side-a {
-            // background-image: url("../assets/goldCoin.png");
             z-index: 100;
         }
         .side-b {
-            // background-image: url("../assets/goldCoin.png");
             -webkit-transform: rotateY(-180deg);
         }
     }

@@ -56,11 +56,7 @@ export default function CoinFlip() {
         if (walletAddress || isGameCreated) {
             dispatch(getGameData(walletAddress))
             setIsGameCreated(false)
-            // dataInterval = setInterval(() => {
-            //     dispatch(getGameData(walletAddress))
-            // }, 2000)
         } else {
-            // clearInterval(dataInterval)
             dispatch(resetGameData())
         }
         return () => {
@@ -93,10 +89,6 @@ export default function CoinFlip() {
                         variant: 'error',
                     })
                 }, 3000)
-                // setOpenJoinDailog({
-                //     gameData: null,
-                //     isOpen: false,
-                // })
             } else if (result.winner === walletAddress) {
                 if (gameData.coinSide) setFlipResult('tails')
                 else if (!gameData.coinSide) setFlipResult('heads')
@@ -105,10 +97,6 @@ export default function CoinFlip() {
                         variant: 'success',
                     })
                 }, 3000)
-                // setOpenJoinDailog({
-                //     gameData: null,
-                //     isOpen: false,
-                // })
             }
         } catch (err) {
             console.log('err', err)
@@ -512,8 +500,8 @@ export default function CoinFlip() {
                                         width="100"
                                         src={
                                             watchModalDetails.coinSide
-                                                ? silverCoin
-                                                : goldCoin
+                                                ? goldCoin
+                                                : silverCoin
                                         }
                                         alt="gold-coin"
                                     />
@@ -521,7 +509,9 @@ export default function CoinFlip() {
                                 <div className="side-b">
                                     <img
                                         width="100"
-                                        src={silverCoin}
+                                        src={!watchModalDetails.coinSide
+                                            ? silverCoin
+                                            : goldCoin}
                                         alt="gold-coin"
                                     />
                                 </div>

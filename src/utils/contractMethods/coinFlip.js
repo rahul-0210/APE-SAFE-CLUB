@@ -63,12 +63,11 @@ export const startTossingGame = async (gameCount, userAddress) => {
     try {
         const amount = await isApproved(userAddress)
         if (!+amount) {
-            const res = await approve(userAddress)
+            await approve(userAddress)
         }
         const result = await coinFlipContract.methods
             .takeBet(gameCount)
             .send({from: userAddress})
-        console.log('result', result)
         const eventData = result.events?.WinnerAnnounced?.returnValues
         console.log('eventData', eventData)
         return eventData

@@ -43,7 +43,6 @@ export default function ConnectWallet() {
             dispatch(setWalletConnectionStatus(active))
             if (chainId && chainId !== 56) {
                 deactivate()
-                // toast.error("Please connect to smart chain for using money printer")
                 enqueueSnackbar('Please connect to smart chain.', {
                     variant: 'error',
                 })
