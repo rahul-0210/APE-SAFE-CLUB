@@ -10,6 +10,7 @@ import CoinFlip from './pages/coinFlip'
 import RollDice from './pages/rollDice'
 import {setWalletConnectionStatus} from './redux/actions/wallet'
 import LoaderComponent from './components/loaderComponent'
+import Farm from './pages/farm'
 
 function App() {
     const {enqueueSnackbar} = useSnackbar()
@@ -66,6 +67,9 @@ function App() {
                     <DashboardLayout>
                         <Switch>
                             <Route path="/" component={ConnectWallet} exact />
+                            {walletConnectionStatus && (
+                                <Route path="/farm" component={Farm} />
+                            )}
                             {walletConnectionStatus && (
                                 <Route path="/dice" component={RollDice} />
                             )}

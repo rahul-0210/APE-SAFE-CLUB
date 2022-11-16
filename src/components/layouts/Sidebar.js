@@ -10,6 +10,7 @@ import Discord from '../../assets/nav-icons/discord.svg'
 import coinflip from '../../assets/nav-icons/coinFlip.svg'
 import diceLogo from '../../assets/nav-icons/dice.svg'
 import ExternalLink from '../../assets/nav-icons/external-link-icon.svg'
+import Tractor from "../../assets/nav-icons/tractor.svg"
 import apeLogo from '../../assets/logo-white.png'
 
 const Sidebar = () => {
@@ -17,6 +18,14 @@ const Sidebar = () => {
     const {sidebarOpen} = useSelector((state) => state.masterReducer)
 
     const NAV_LINKS = [
+        {
+            logo: Tractor,
+            title: 'Farms',
+            subtext: 'Great pasive income',
+            path: '/farm',
+            isExternal: false,
+            network: null,
+        },
         {
             logo: coinflip,
             title: 'Coin Flip',
