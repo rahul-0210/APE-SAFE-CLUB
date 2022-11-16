@@ -1,0 +1,699 @@
+.disabled {
+  opacity: 0.5;
+}
+.stake-cards {
+  width: 418px;
+  height: auto;
+  // background: #ffffffc7;
+  box-shadow: 0px 5px 20px rgba(13, 56, 199, 0.102);
+  // border: double 1px #398df5;
+  border-radius: 10px;
+  background-origin: border-box;
+  backdrop-filter: blur(20px);
+  background-color: #0000007a;
+  background-clip: content-box, border-box;
+  margin-bottom: 20px;
+  margin-right: 20px;
+
+  .stack-cards-child {
+    padding: 30px;
+    .stake-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+      img {
+        margin-right: 20px;
+      }
+      .stake-name {
+        color: #f0ba35;
+        font-weight: bold;
+        font-size: 24px;
+      }
+      .new-item-badge {
+        color: #ffffff;
+      }
+      .downloadList {
+        margin-left: 8px;
+        font-size: 12px;
+      }
+    }
+    .stake-details {
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      .apy {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        p {
+          color: #f0ba35;
+          font-weight: normal;
+          font-size: 11px;
+          margin-bottom: 4px;
+        }
+        .percent {
+          font-size: 14px;
+          font-weight: bold;
+          color: #ffffff;
+        }
+      }
+      .value {
+        padding: 20px 40px;
+      }
+      .staked {
+        padding: 20px 20px;
+        margin: 0px;
+      }
+      .stakes {
+        padding: 20px 18px;
+      }
+    }
+    .stake-buttons {
+      display: flex;
+      @media screen and (max-width: 450px) {
+        flex-wrap: wrap;
+      }
+      align-items: center;
+      justify-content: center;    //space-between
+      padding: 0px 0px 15px 0px;
+      margin-bottom: 15px;
+      .loader {
+        display: flex;
+        img {
+          height: 20px;
+          margin-right: 5px;
+          -webkit-animation: spin 1s linear infinite;
+          -moz-animation: spin 1s linear infinite;
+          animation: spin 1s linear infinite;
+        }
+        p {
+          font-weight: 600;
+          font-size: 14px;
+          color: #ffffff;
+        }
+      }
+      .stake-values {
+        p:nth-child(1) {
+          color: #f0ba35;
+          font-weight: 600;
+          font-size: 11px;
+          margin-bottom: 2px;
+        }
+        p:nth-child(2) {
+          color: #ffffff;
+          font-weight: bold;
+          font-size: 18px;
+        }
+      }
+      .stake-button {
+        @media screen and (max-width: 450px) {
+          margin-top: 10px;
+          justify-content: space-around;
+          flex-grow: 1;
+        }
+        display: flex;
+        flex-wrap: wrap;
+        .loading {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          img {
+            margin-right: 2px;
+            height: 20px;
+            -webkit-animation: spin 1s linear infinite;
+            -moz-animation: spin 1s linear infinite;
+            animation: spin 1s linear infinite;
+          }
+          p {
+            font-weight: 600;
+            font-size: 12px;
+            color: #ffffff;
+            width: 50%;
+          }
+        }
+        .stakeFeeDiv {
+          text-align: center;
+          margin-right: 10px;
+        }
+        .stakeFee {
+          color: #f0ba35;
+          font-size: 11px;
+        }
+        .btn {
+          border: double 1px transparent;
+          border-radius: 10px;
+          background-image: linear-gradient(#f2f5fa, #f2f5fa), radial-gradient(circle at top right, #142c48 4.02%, #c1d7fc 97.87%);
+          background-origin: border-box;
+          background-clip: content-box, border-box;
+          margin-right: 10px;
+
+          button {
+            border-radius: 10px;
+            color: #142c48;
+            padding: 10px 15px;
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+            background: none;
+            cursor: pointer;
+          }
+          button:hover {
+            opacity: 0.8;
+          }
+        }
+        .btn-with-subtext {
+          margin-right: 2px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .btn-subtext {
+            padding-top: 5px;
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+    .stake-earned {
+      display: flex;
+      // align-items: center;
+      justify-content: space-between;
+      // flex-wrap: wrap;
+      padding: 0px 0px 15px 0px;
+      .stake-values {
+        p:nth-child(1) {
+          color: #f0ba35;
+          font-weight: 600;
+          font-size: 11px;
+          margin-bottom: 2px;
+        }
+        p:nth-child(2) {
+          color: #ffffff;
+          font-weight: bold;
+          font-size: 18px;
+        }
+      }
+      .stake-button {
+        button {
+          border-radius: 10px;
+          width: 110px;
+          height: 44px;
+          margin-right: 10px;
+          background: linear-gradient(90deg, #142c48 0%, #96a3ab 100%);
+          color: #ffffff;
+          border: none;
+          font-weight: 600;
+          font-size: 14px;
+          cursor: pointer;
+        }
+        button:hover {
+          opacity: 0.8;
+        }
+        :disabled {
+          background: linear-gradient(90deg, #142c48 0%, #96a3ab 100%);
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+      .loader {
+        display: flex;
+        align-items: center;
+        .transaction-text {
+          margin-left: 10px;
+        }
+        img {
+          margin-right: 2px;
+          height: 20px;
+          -webkit-animation: spin 1s linear infinite;
+          -moz-animation: spin 1s linear infinite;
+          animation: spin 1s linear infinite;
+        }
+        p {
+          font-size: 12px;
+          font-weight: normal;
+        }
+        a {
+          font-size: 14px;
+          color: #1865ed;
+        }
+      }
+    }
+  }
+  .stake-nft-view {
+    background-color: #f2f5fa;
+    padding: 30px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    .stake-nft-title {
+      display: flex;
+      align-items: center;
+      p {
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 24px;
+
+        img {
+          margin: 0px 5px;
+        }
+      }
+    }
+    .stake-nft-desc {
+      margin-top: 10px;
+      p {
+        font-size: 15px;
+        font-weight: normal;
+        span {
+          color: #1865ed;
+        }
+      }
+    }
+    .info-icon {
+      padding-left: 5px;
+      margin-top: 5px;
+    }
+    .stake-nft-mint {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .stake-nft-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 50%;
+        .stake-value-title {
+          color: #f0ba35;
+          font-weight: normal;
+          font-size: 14px;
+          text-align: center;
+        }
+        .stake-value {
+          color: #1865ed;
+          font-size: 24px;
+          font-weight: bold;
+          text-align: center;
+        }
+        .stake-value-disabled {
+          color: #f0ba35;
+          font-size: 24px;
+          font-weight: bold;
+          text-align: center;
+        }
+      }
+      .stake-buttons {
+        .stake-button {
+          display: flex;
+          flex-wrap: wrap;
+          .btn {
+            border: double 1px transparent;
+            border-radius: 10px;
+            background-image: linear-gradient(#f2f5fa, #f2f5fa), radial-gradient(circle at top right, #142c48 4.02%, #c1d7fc 97.87%);
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+            margin-right: 10px;
+
+            button {
+              border-radius: 10px;
+              color: #142c48;
+              padding: 10px 15px;
+              font-weight: 600;
+              font-size: 14px;
+              border: none;
+              background: none;
+              cursor: pointer;
+            }
+            button:hover {
+              opacity: 0.8;
+            }
+          }
+        }
+        .loader {
+          display: flex;
+          align-items: center;
+          .transaction-text {
+            margin-left: 10px;
+          }
+          img {
+            margin-right: 2px;
+            height: 20px;
+            -webkit-animation: spin 1s linear infinite;
+            -moz-animation: spin 1s linear infinite;
+            animation: spin 1s linear infinite;
+          }
+          p {
+            font-size: 12px;
+            font-weight: normal;
+          }
+          a {
+            font-size: 14px;
+            color: #1865ed;
+            border-bottom: 1px solid #1865ed;
+          }
+        }
+      }
+    }
+  }
+}
+.switch-network-View {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 20px;
+  text-align: center;
+  width: 80%;
+  margin-left: 8%;
+  padding: 10px 15px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  p {
+    color: #ffffff;
+    font-size: 12px;
+    span {
+      font-weight: bold;
+    }
+  }
+  img {
+    height: 16px;
+  }
+}
+
+.unstake-card-nft {
+  margin-top: 20px;
+
+  .nft-logo-div {
+    .nft-logo {
+      width: 150px;
+      border-radius: 10px;
+    }
+  }
+
+  .nft-card-header {
+    font-size: 20;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .nft-card-balance-div {
+    font-size: 13px;
+    color: #778193;
+    margin-bottom: 15px;
+    display: flex;
+
+    .amount-title {
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .amount-value {
+      font-weight: 400;
+      color: #ffffff;
+    }
+  }
+
+  .unstake-title {
+    font-size: 13px;
+    color: "#778193";
+  }
+
+  .input-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .input-area {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 135px;
+      height: 44px;
+      border-radius: 10px;
+      background-color: #f2f5fa;
+
+      input {
+        width: 75px;
+        height: 44px;
+        background: transparent;
+        border-radius: 5px;
+        /* font-weight: normal;
+                font-size: 16px; */
+        padding: 5px;
+        outline: none;
+        border: none;
+      }
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Firefox */
+      input[type="number"] {
+        -moz-appearance: textfield;
+        font-weight: normal;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.description-div {
+  margin: 15px 0px;
+  .description-heading {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  .description-para {
+    color: #ffffff;
+    font-weight: 400;
+    font-size: 14px;
+    text-align: justify;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .disabled-card-wrapper {
+    flex-grow: 1;
+    margin-right: 15px;
+  }
+  .stake-cards {
+    height: auto;
+    width: 100%;
+    .stack-cards-child {
+      padding: 15px;
+      .stake-details {
+        .value {
+          padding: 20px 30px;
+        }
+        .staked {
+          padding: 20px 10px;
+        }
+        .stakes {
+          padding: 20px 10px;
+        }
+      }
+      .stake-buttons {
+        .stake-button {
+          .btn {
+            button {
+              padding: 10px 12px;
+            }
+            button:hover {
+              opacity: 0.8;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .unstake-card-nft {
+    .nft-logo-div {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  }
+
+  .description-div {
+    margin: 15px 0px;
+    .description-heading {
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .description-para {
+      color: #ffffff;
+      font-weight: 400;
+      font-size: 12px;
+      text-align: justify;
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
+  // flex-basis: 100%;
+  .disabled-card-wrapper {
+    flex-grow: 1;
+    margin-right: 0px;
+  }
+  .stake-cards {
+    margin-right: auto;
+    .stack-cards-child {
+      .stake-details {
+        display: block;
+        .value {
+          border: none;
+          border-bottom: 1px solid #398df5;
+          padding: 8px;
+        }
+        .staked {
+          border: none;
+          border-bottom: 1px solid #398df5;
+          padding: 8px;
+        }
+        .stakes {
+          border: none;
+          border-bottom: 1px solid #398df5;
+          padding: 8px;
+        }
+      }
+    }
+  }
+}
+
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.migrate-button {
+  border-radius: 10px;
+  color: #142c48;
+  padding: 10px 15px;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.migrate-button:hover {
+  opacity: 0.8;
+}
+
+.migrate-modal {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100vh;
+  width: 100vw;
+  z-index: 999;
+
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+
+  .modal-container {
+    background-color: #ffffff;
+    max-width: 600px;
+    padding: 25px;
+    -webkit-box-shadow: 0px 5px 20px rgba(13, 56, 199, 0.102);
+    box-shadow: 0px 0px 54px -2px rgba(0, 0, 0, 0.34);
+    -webkit-box-shadow: 0px 0px 54px -2px rgba(0, 0, 0, 0.34);
+    -moz-box-shadow: 0px 0px 54px -2px rgba(0, 0, 0, 0.34);
+    border-radius: 15px;
+    position: relative;
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
+
+    .modal-description {
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .modal-header {
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    @media screen and (max-width: 450px) {
+      .modal-description {
+        min-width: 200px;
+      }
+    }
+  }
+}
+
+.RFS-StepperContainer {
+  padding: 15px 0px !important;
+}
+
+.info-text {
+  color: #f0ba35;
+}
+
+.action-section {
+  // display: flex;
+  // align-items: center;
+  text-align: center;
+}
+
+.action-button {
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  margin-top: 20px;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  background: linear-gradient(90deg, #142c48 0%, #96a3ab 100%);
+  color: #ffffff;
+  cursor: pointer;
+  img {
+    margin-right: 20px;
+  }
+}
+
+.balance-text {
+  flex-grow: 1;
+  color: #1865ed;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.nft-Tooltip{
+  padding: 10px;
+  font-size: 14px;
+
+  li {
+    margin: 8px 5px;
+  }
+}
