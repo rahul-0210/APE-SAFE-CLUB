@@ -4,7 +4,7 @@ import LoaderComponent from '../loaderComponent'
 
 // import {modalAction, ssgtxModalAction} from '../redux/actions/modalAction'
 
-// import closeIcon from '../assets/CloseIcon.svg'
+import closeIcon from '../../assets/CloseIcon.svg'
 
 const StakeDeposit = (props) => {
     const MAX_BALANCE = '100000000000000000000000000000000'
@@ -40,7 +40,7 @@ const StakeDeposit = (props) => {
                     <div className="stake-header">
                         <p>Stake {props?.title}</p>
                         <p onClick={close}>
-                            {/* <img src={closeIcon} alt="closeIcon" /> */}
+                            <img src={closeIcon} alt="closeIcon" />
                         </p>
                     </div>
                     <div className="balance">

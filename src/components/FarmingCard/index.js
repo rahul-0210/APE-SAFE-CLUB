@@ -14,6 +14,7 @@ import StakeWithdraw from '../FarmingModals/stakeWithdraw'
 
 const FarmingCard = ({
     pool,
+    logo,
     rewardTokenSymbol,
     tokenPrice,
     currentBlockTime,
@@ -220,14 +221,19 @@ const FarmingCard = ({
             <div className="stake-cards">
                 <div className="stack-cards-child">
                     <div className="stake-title">
-                        {/* <img src={logo} alt='' /> */}
+                        <img
+                            src={logo}
+                            alt="farm-logo"
+                            width={103}
+                            height={96}
+                        />
                         <p className="stake-name">Farm {title}</p>
                     </div>
                     <div className="stake-details">
                         <div className="apy value">
                             <p>APR</p>
                             <p className="percent">
-                                {farmApr ? farmApr : '-'}%
+                                {farmApr ? farmApr : '0.000'}%
                             </p>
                         </div>
                     </div>
@@ -235,7 +241,7 @@ const FarmingCard = ({
                         <div className="stake-button">
                             <div className="btn">
                                 <button
-                                    onClick={() => unStakeModalStatus(true)}
+                                    onClick={() => setUnStakeModalStatus(true)}
                                 >
                                     Unstake&nbsp;&nbsp;&nbsp;-
                                 </button>

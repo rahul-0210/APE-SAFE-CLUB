@@ -9,7 +9,7 @@ import LoaderComponent from '../loaderComponent'
 // } from '../redux/actions/modalAction'
 // import UnstakeNftList from "./unstakeNftlist";
 
-// import closeIcon from '../assets/CloseIcon.svg'
+import closeIcon from '../../assets/CloseIcon.svg'
 // import InfoIcon from '../assets/InfoIcon.svg'
 
 const StakeWithdraw = (props) => {
@@ -111,7 +111,7 @@ const StakeWithdraw = (props) => {
                     <div className="stake-header">
                         <p>Unstake {props.title}</p>
                         <p onClick={close}>
-                            {/* <img src={closeIcon} alt="closeIcon" /> */}
+                            <img src={closeIcon} alt="closeIcon" />
                         </p>
                     </div>
                     <div className="balance">

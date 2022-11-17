@@ -43,23 +43,12 @@ export const calculateLiquidity = async (
             item.tokenUrl
     )
 
-    // const urlForToken0 = coingeckoData.find((item) => {
-    //     if (token0?.toLowerCase() === item.tokenProd.toLowerCase()) {
-    //         return item.tokenUrl ? item.tokenUrl : null
-    //     }
-    // })
-    // const urlForToken1 = coingeckoData.find((item) => {
-    //     if (
-    //         token1?.toString().toLowerCase() ===
-    //         item.tokenProd.toString().toLowerCase()
-    //     ) {
-    //         return item.tokenUrl ? item.tokenUrl : null
-    //     }
-    // })
-
     try {
         if (urlForToken0 && liquidityToken0) {
             const usdValueToken0 = await getTokenUSDPrice(urlForToken0.tokenUrl)
+            if (urlForToken0[0].name === 'ASC') {
+                usdValueToken0 = usdValueToken0.data
+            }
             if (
                 urlForToken0.name.toString().toLowerCase() === 'tether' ||
                 urlForToken0.name.toString().toLowerCase() === 'usd-coin'
@@ -67,8 +56,13 @@ export const calculateLiquidity = async (
                 usdRateForToken0 =
                     usdValueToken0[urlForToken0.name]?.usd * +liquidityToken0
             } else {
-                usdRateForToken0 =
-                    usdValueToken0[urlForToken0.name]?.usd * +liquidityToken0
+                if (usdValueToken0[urlForToken0.name]?.usd) {
+                    usdRateForToken0 =
+                        usdValueToken0[urlForToken0.name]?.usd *
+                        +liquidityToken0
+                } else {
+                    usdRateForToken0 = usdValueToken0?.price * +liquidityToken0
+                }
             }
         }
         //USE BELOW CODE FOR DEVELOPMENT TESTING

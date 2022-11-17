@@ -9,7 +9,8 @@ export const ethToWei = (value) => {
     return web3.utils.toWei(value, 'ether')
 }
 
-const farmingContractAddress = process.env.REACT_APP_FARMING_CONTRACT_ADDRESS
+const farmingContractAddress =
+    process.env.REACT_APP_FARMING_CONTRACT_ADDRESS_OLD
 // const lpTokenContractAddress = process.env.REACT_APP_LPTOKEN_CONTRACT_ADDRESS
 
 const farmingContract = new web3.eth.Contract(

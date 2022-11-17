@@ -23,41 +23,17 @@ import {
     getLpTokenContract,
 } from '../utils/contractMethods/farm.service'
 import {getUSDRate} from '../api/request'
+import BusdAscIconStakeLogo from '../assets/BusdAscIconStakeLogo.png'
+import BnbAscIconStakeLogo from '../assets/BnbAscIconStakeLogo.png'
 
 export default function Farm() {
     const [poolLength, setPoolLength] = useState(null)
     const [tokenPrice, setTokenPrice] = useState('')
-    console.log('tokenPrice', tokenPrice)
-    // const [allPoolsInfo, setAllPoolsInfo] = useState({
-    //     poolId: [],
-    //     multipliers: [],
-    //     poolDetails: [],
-    //     lpTokenBalance: [],
-    //     userDetails: [],
-    //     stakedValue: [],
-    //     rewardDebt: [],
-    //     stakeFee: [],
-    //     lpTokenAddress: [],
-    //     allocPoint: [],
-    //     lpContract: [],
-    //     totalTokensPerBlock: [],
-    //     totalEarnedTokens: [],
-    //     totalPendingTokens: [],
-    //     lpTokenName: [],
-    //     lpTokenSymbol0: [],
-    //     lpTokenSymbol1: [],
-    //     lpTokenTotalSupply: [],
-    //     lpToken0: [],
-    //     lpToken1: [],
-    //     lpTokenAllowance: [],
-    //     lpToken0Liquidity: [],
-    //     lpToken1Liquidity: [],
-    //     totalAllocPoints: [],
-    // })
+
     const [allPoolsInfo, setAllPoolsInfo] = useState([])
-    console.log('allPoolsInfo', allPoolsInfo)
     const {walletAddress} = useSelector((state) => state.wallet)
 
+    const logo = [BusdAscIconStakeLogo, BnbAscIconStakeLogo]
     useEffect(() => getFarmPoolLength(), [])
 
     const getFarmPoolLength = async () => {
@@ -298,11 +274,12 @@ export default function Farm() {
                 <Box sx={{m: 4}}>
                     <Grid container columns={{xs: 12, sm: 12, md: 6}}>
                         {allPoolsInfo.length > 0 &&
-                            allPoolsInfo.map((pool) => {
+                            allPoolsInfo.map((pool, i) => {
                                 return (
                                     <Grid key={pool.poolId} item>
                                         <FarmingCard
                                             pool={pool}
+                                            logo={logo[i]}
                                             rewardTokenSymbol="ASC"
                                             tokenPrice={tokenPrice}
                                             currentBlockTime={3}
