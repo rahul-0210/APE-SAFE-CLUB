@@ -1,0 +1,504 @@
+.card-shadow {
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .stake-adder-card {
+    /*width: 489px;
+        height: 324px;*/
+    min-width: 650px;
+    // max-width: 489px;    
+    min-height: 100px;    //modal height & width
+    background: #ffffff;
+    padding: 30px 30px;
+    box-shadow: 0px 5px 20px rgba(13, 56, 199, 0.102);
+    border-radius: 15px;
+    .stake-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      .imgIcon {
+        height: 24px;
+        position: absolute;
+        margin-top: 4px;
+      }
+      p:nth-child(1) {
+        font-weight: bold;
+        font-size: 24px;
+        color: #0a2148;
+      }
+      p:nth-child(2) {
+        font-size: 20px;
+        color: #142c48;
+        cursor: pointer;
+      }
+    }
+    .balance {
+      margin-bottom: 5px;
+      p {
+        font-weight: normal;
+        font-size: 13px;
+        color: #778193;
+        margin-bottom: 8px;
+      }
+      p:nth-child(1) {
+        float: left;
+      }
+      p:nth-child(2) {
+        float: right;
+        margin-right: 25px;
+      }
+    }
+    .selectTokenIdText {
+      p {
+        font-weight: normal;
+        font-size: 13px;
+        color: #778193;
+      }
+    }
+    ul.checkbox {
+      margin-top: 10px;
+      column-count: 3;
+      column-gap: 3em;
+      align-self: flex-start;
+      margin-left: 2px;
+      list-style: none;
+      max-height: 200px;
+      // overflow: auto;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .token-item {
+      width: 150px;
+      height: 44px;
+      border-radius: 10px;
+      background-color: #f2f5fa;
+      font-size: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 5px;
+    }
+    .add-on {
+      display: flex;
+      align-items: center;
+      // margin-bottom: 20px;
+      //flex-direction: column;
+      min-width: 200px;
+      .token-list-div {
+        overflow-y: scroll;
+        height: 100px;
+        width: 100%;
+        margin: 15px 0px;
+      }
+      .token_check {
+        margin: auto 6px auto 0;
+      }
+      .token_label {
+        font-size: 14px;
+      }
+      .tokenid-list {
+        display: flex;
+        margin: 3px 0;
+        width: 100%;
+      }
+      .input-value {
+        border: double 1px transparent;
+        border-radius: 5px;
+        background-image: linear-gradient(white, white), radial-gradient(circle at top right, #142c48 4.02%, #c1d7fc 97.87%);
+        background-origin: border-box;
+        background-clip: content-box, border-box;
+        width: 240px;
+        height: 44px;
+        margin-right: 10px;
+        input {
+          width: 240px;
+          height: 44px;
+          background: transparent;
+          border-radius: 5px;
+          font-weight: normal;
+          font-size: 16px;
+          padding: 5px;
+          outline: none;
+          border: none;
+        }
+      }
+      .input-value-error {
+        border: double 1px transparent;
+        border-radius: 5px;
+        background-image: linear-gradient(white, white), radial-gradient(circle at top right, #f44336 100%, #c1d7fc 97.87%);
+        background-origin: border-box;
+        background-clip: content-box, border-box;
+        width: 240px;
+        height: 44px;
+        margin-right: 10px;
+        input {
+          width: 240px;
+          height: 44px;
+          background: transparent;
+          border-radius: 5px;
+          font-weight: normal;
+          font-size: 16px;
+          padding: 5px;
+          outline: none;
+          border: none;
+        }
+      }
+      input[type="submit"] {
+        width: 73px;
+        height: 44px;
+        background: rgba(23, 199, 167, 0.1);
+        border: 1px solid #17c7a7;
+        box-sizing: border-box;
+        border-radius: 5px;
+        margin-right: 10px;
+        font-weight: bold;
+        font-size: 14px;
+        color: #17c7a7;
+      }
+      .stake-type {
+        display: flex;
+        align-items: center;
+        img {
+          height: 18px;
+          margin-right: 5px;
+        }
+        p {
+          font-weight: normal;
+          font-size: 18px;
+          color: #0a2148;
+        }
+      }
+    }
+    .error-text {
+      font-size: 12px;
+      margin-bottom: 20px;
+      color: #f44336;
+    }
+    .unstakeInfoTextDiv {
+      text-align: center;
+    }
+    .unstakeInfoText {
+      color: #768193;
+      font-size: 12px;
+    }
+    .button-stake {
+      display: flex;
+      flex-direction: column;
+      button {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        border: none;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      button:hover {
+        opacity: 0.8;
+      }
+
+      :nth-child(1) {
+        background: linear-gradient(90deg, #142c48 0%, #96a3ab 100%);
+        color: #ffffff;
+      }
+      :nth-child(2) {
+        background: #f2f5fa;
+        color: #142c48;
+      }
+      button:disabled {
+        opacity: 0.5;
+      }
+      .stakeFeeTextStyleDiv {
+        text-align: center;
+      }
+      .stakeFeeTextStyle {
+        background: #fff;
+        color: #768193;
+        font-size: 12px;
+        padding-bottom: 10px;
+      }
+    }
+  }
+  .stake-adder-card-withdraw {
+    /*width: 489px;
+        height: 324px;*/
+    max-width: 500px;
+    min-height: 100px;
+    background: #ffffff;
+    padding: 20px 30px;
+    box-shadow: 0px 5px 20px rgba(13, 56, 199, 0.102);
+    border-radius: 15px;
+    .stake-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      .imgIcon {
+        height: 24px;
+        position: absolute;
+        margin-top: 4px;
+      }
+      p:nth-child(1) {
+        font-weight: bold;
+        font-size: 24px;
+        color: #0a2148;
+      }
+      p:nth-child(2) {
+        font-size: 20px;
+        color: #142c48;
+        cursor: pointer;
+      }
+    }
+    .balance {
+      p {
+        font-weight: normal;
+        font-size: 13px;
+        color: #778193;
+      }
+      p:nth-child(1) {
+        float: left;
+      }
+      p:nth-child(2) {
+        float: right;
+        margin-right: 25px;
+      }
+    }
+    .selectTokenIdText {
+      p {
+        font-weight: normal;
+        font-size: 13px;
+        color: #778193;
+      }
+    }
+    ul.checkbox {
+      margin-top: 10px;
+      column-count: 3;
+      column-gap: 3em;
+      align-self: flex-start;
+      margin-left: 2px;
+      list-style: none;
+      max-height: 200px;
+      overflow: auto;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .token-item {
+      width: 150px;
+      height: 44px;
+      border-radius: 10px;
+      background-color: #f2f5fa;
+      font-size: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 5px;
+    }
+    .add-on {
+      display: flex;
+      align-items: center;
+      // margin-bottom: 20px;
+      //flex-direction: column;
+      min-width: 200px;
+      .token-list-div {
+        overflow-y: scroll;
+        height: 100px;
+        width: 100%;
+        margin: 15px 0px;
+      }
+      .token_check {
+        margin: auto 6px auto 0;
+      }
+      .token_label {
+        font-size: 14px;
+      }
+      .tokenid-list {
+        display: flex;
+        margin: 3px 0;
+        width: 100%;
+      }
+      .input-value {
+        border: double 1px transparent;
+        border-radius: 5px;
+        background-image: linear-gradient(white, white), radial-gradient(circle at top right, #142c48 4.02%, #c1d7fc 97.87%);
+        background-origin: border-box;
+        background-clip: content-box, border-box;
+        width: 240px;
+        height: 44px;
+        margin-right: 10px;
+        input {
+          width: 240px;
+          height: 44px;
+          background: transparent;
+          border-radius: 5px;
+          font-weight: normal;
+          font-size: 16px;
+          padding: 5px;
+          outline: none;
+          border: none;
+        }
+      }
+      .input-value-error {
+        border: double 1px transparent;
+        border-radius: 5px;
+        background-image: linear-gradient(white, white), radial-gradient(circle at top right, #f44336 100%, #c1d7fc 0%);
+        background-origin: border-box;
+        background-clip: content-box, border-box;
+        width: 240px;
+        height: 44px;
+        margin-right: 10px;
+        input {
+          width: 240px;
+          height: 44px;
+          background: transparent;
+          border-radius: 5px;
+          font-weight: normal;
+          font-size: 16px;
+          padding: 5px;
+          outline: none;
+          border: none;
+        }
+      }
+      input[type="submit"] {
+        width: 73px;
+        height: 44px;
+        background: rgba(23, 199, 167, 0.1);
+        border: 1px solid #17c7a7;
+        box-sizing: border-box;
+        border-radius: 5px;
+        margin-right: 10px;
+        font-weight: bold;
+        font-size: 14px;
+        color: #17c7a7;
+      }
+      .stake-type {
+        display: flex;
+        align-items: center;
+        img {
+          height: 18px;
+          margin-right: 5px;
+        }
+        p {
+          font-weight: normal;
+          font-size: 18px;
+          color: #0a2148;
+        }
+      }
+    }
+    .error-text {
+      font-size: 12px;
+      margin-bottom: 20px;
+      color: #f44336;
+    }
+    .unstakeInfoTextDiv {
+      text-align: center;
+    }
+    .unstakeInfoText {
+      color: #768193;
+      font-size: 12px;
+    }
+    .button-stake {
+      display: flex;
+      flex-direction: column;
+      button {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        border: none;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      button:hover {
+        opacity: 0.8;
+      }
+
+      :nth-child(1) {
+        background: linear-gradient(90deg, #142c48 0%, #96a3ab 100%);
+        color: #ffffff;
+      }
+      :nth-child(2) {
+        background: #f2f5fa;
+        color: #142c48;
+      }
+      button:disabled {
+        opacity: 0.5;
+      }
+      .stakeFeeTextStyleDiv {
+        text-align: center;
+      }
+      .stakeFeeTextStyle {
+        background: #fff;
+        color: #768193;
+        font-size: 12px;
+        padding-bottom: 10px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .card-shadow {
+    padding: 10px;
+
+    .stake-adder-card {
+      width: 400px !important;
+    }
+
+    .scroll {
+      max-height: 80vh;
+      // width: 100% !important;
+      padding: 20px 15px;
+      border-radius: 10px;
+
+      .add-on {
+        .input-value {
+          width: 100%;
+
+          input {
+            width: 100%;
+            font-size: 12px;
+          }
+        }
+        .input-value-error {
+          width: 100%;
+          input {
+            width: 100%;
+            font-size: 12px;
+          }
+        }
+        input[type="submit"] {
+          width: 40%;
+        }
+        .stake-type {
+          p {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .scroll {
+    overflow-y: auto;
+  }
+}
+
+.currentUnstake-info-div {
+  margin-bottom: 8px;
+  .currentUnstake-info {
+    display: "flex";
+    flex-wrap: wrap;
+    font-weight: normal;
+    font-size: 13px;
+    color: #778193;
+    // margin-bottom: 8px;
+  }
+}

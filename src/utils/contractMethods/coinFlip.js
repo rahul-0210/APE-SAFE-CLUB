@@ -13,7 +13,7 @@ const coinFlipContract = new web3.eth.Contract(
 
 const tokenContract = new web3.eth.Contract(tokenAbi, coinFlipTokenAddress)
 
-const setAmountProperly = (amount) => {
+export const setAmountProperly = (amount) => {
     amount = amount.toString()
     if (amount.includes('e')) {
         let [base, expo] = amount.split('e')

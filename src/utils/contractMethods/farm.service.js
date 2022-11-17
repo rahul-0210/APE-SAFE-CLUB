@@ -1,8 +1,13 @@
 import Web3 from 'web3'
 import farmingABI from '../../abi/farmingABI.json'
 import lpTokenABI from '../../abi/lpTokenABI.json'
+import {setAmountProperly} from './coinFlip'
 
 const web3 = new Web3(window.ethereum)
+
+export const ethToWei = (value) => {
+    return web3.utils.toWei(value, 'ether')
+}
 
 const farmingContractAddress = process.env.REACT_APP_FARMING_CONTRACT_ADDRESS
 // const lpTokenContractAddress = process.env.REACT_APP_LPTOKEN_CONTRACT_ADDRESS
@@ -11,6 +16,49 @@ const farmingContract = new web3.eth.Contract(
     farmingABI,
     farmingContractAddress
 )
+
+export const approve = async (lpContract, userAddress) => {
+    let amount = 100000000000000 * 10 ** 18
+    amount = setAmountProperly(amount.toString())
+    try {
+        let result = await lpContract.methods
+            .approve(farmingContractAddress, amount)
+            .send({from: userAddress})
+        return result
+    } catch (error) {
+        throw error
+    }
+}
+
+export const deposit = async (poolId, amount, userAddress) => {
+    try {
+        const result = await farmingContract.methods
+            .deposit(poolId, amount)
+            .send({from: userAddress})
+        return result
+    } catch (error) {
+        throw error
+    }
+}
+
+export const withdraw = async (poolId, amount, userAddress) => {
+    try {
+        const result = await farmingContract.methods
+            .withdraw(poolId, amount)
+            .send({from: userAddress})
+        return result
+    } catch (error) {
+        throw error
+    }
+}
+
+export const getLpTokenContract = (lpTokenContractAddress) => {
+    const lpTokenContract = new web3.eth.Contract(
+        lpTokenABI,
+        lpTokenContractAddress
+    )
+    return lpTokenContract
+}
 
 export const getPoolLength = async (walletAddress) => {
     try {
@@ -47,9 +95,10 @@ export const getUserInfo = async (walletAddress, pool) => {
 
 export const getEarnedTokens = async (walletAddress) => {
     try {
-        const earnedTokens = await farmingContract.methods
+        let earnedTokens = await farmingContract.methods
             .earnedTokens(walletAddress)
             .call({from: walletAddress})
+        earnedTokens = (earnedTokens / 10 ** 9).toFixed(3).toString()
         return earnedTokens
     } catch (error) {
         throw error
@@ -58,9 +107,10 @@ export const getEarnedTokens = async (walletAddress) => {
 
 export const getPendingtokens = async (walletAddress, pool) => {
     try {
-        const pendingTokens = await farmingContract.methods
+        let pendingTokens = await farmingContract.methods
             .pendingTGC(pool, walletAddress)
             .call({from: walletAddress})
+        pendingTokens = (pendingTokens / 10 ** 9).toFixed(3).toString()
         return pendingTokens
     } catch (error) {
         throw error
@@ -69,9 +119,10 @@ export const getPendingtokens = async (walletAddress, pool) => {
 
 export const getTokensPerBlock = async (walletAddress) => {
     try {
-        const tokenPerBlock = await farmingContract.methods
+        let tokenPerBlock = await farmingContract.methods
             .tgcPerBlock()
             .call({from: walletAddress})
+        tokenPerBlock = (tokenPerBlock / 10 ** 9).toFixed(3).toString()
         return tokenPerBlock
     } catch (error) {
         throw error
