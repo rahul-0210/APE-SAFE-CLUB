@@ -4,7 +4,7 @@ import {NavLink, useLocation} from 'react-router-dom'
 import {PATH_HEADER_TEXT_MAPPING} from '../../App.config'
 
 import {setSidebarOpen} from '../../redux/actions/master-actions'
-import { WalletDropdown } from "../walletDropdown";
+import {WalletDropdown} from '../walletDropdown'
 import apeLogo from '../../assets/logo-white.png'
 
 const Navbar = () => {
@@ -45,7 +45,9 @@ const Navbar = () => {
                         {PATH_HEADER_TEXT_MAPPING[location.pathname]}
                     </p>
                 </div>
-                <div className="connection"><WalletDropdown /></div>
+                <div className="connection">
+                    <WalletDropdown />
+                </div>
                 {/* {walletAddress && (
                     <p
                         style={{

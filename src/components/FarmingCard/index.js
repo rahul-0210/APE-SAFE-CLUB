@@ -11,6 +11,7 @@ import {
 } from '../../utils/contractMethods/farm.service'
 import StakeDeposit from '../FarmingModals/stakeDeposit'
 import StakeWithdraw from '../FarmingModals/stakeWithdraw'
+import {setLoaderDisplay} from '../../redux/actions/master-actions'
 
 const FarmingCard = ({
     pool,
@@ -53,6 +54,7 @@ const FarmingCard = ({
     const [stakeModalStatus, setStakeModalStatus] = useState(false)
     const [unStakeModalStatus, setUnStakeModalStatus] = useState(false)
     const [inputAmount, setInputAmount] = useState('')
+    const dispatch = useDispatch()
     const {walletAddress} = useSelector((state) => state.wallet)
 
     const {enqueueSnackbar} = useSnackbar()
@@ -120,11 +122,12 @@ const FarmingCard = ({
     }, [lpTokenBalance, stakedValue, liquidityValue, lpTokenTotalSupply])
 
     const getEquivalentRewardUSDRate = (value) => {
-        return +(tokenPrice && tokenPrice * value).toFixed(2)
+        return tokenPrice && +(tokenPrice * value).toFixed(2)
     }
 
     const checkAndStake = async () => {
         try {
+            dispatch(setLoaderDisplay(true, ''))
             if (+inputAmount > 0 && +inputAmount <= +lpTokenBalance) {
                 if (
                     !(+lpTokenAllowance > 0) ||
@@ -155,13 +158,16 @@ const FarmingCard = ({
                 //         BigNumber.from(2).pow(256).sub(1)
                 //     )
                 // }
+                dispatch(setLoaderDisplay(false, ''))
             } else {
+                dispatch(setLoaderDisplay(false, ''))
                 enqueueSnackbar('Insufficient balance', {
                     variant: 'error',
                 })
                 // dispatch(setLoaderDisplay(false, ''))
             }
         } catch (err) {
+            dispatch(setLoaderDisplay(false, ''))
             enqueueSnackbar('Something went wrong', {
                 variant: 'error',
             })
@@ -170,6 +176,7 @@ const FarmingCard = ({
 
     const checkAndUnstake = async () => {
         try {
+            dispatch(setLoaderDisplay(true, ''))
             if (+inputAmount > 0 && +inputAmount <= stakedValue) {
                 const amount = ethToWei(inputAmount)
                 await withdraw(poolId, amount, walletAddress)
@@ -185,12 +192,15 @@ const FarmingCard = ({
                 //     setInputAmount("")
                 //   }
                 // })
+                dispatch(setLoaderDisplay(false, ''))
             } else {
+                dispatch(setLoaderDisplay(false, ''))
                 enqueueSnackbar('Insufficient balance', {
                     variant: 'error',
                 })
             }
         } catch (err) {
+            dispatch(setLoaderDisplay(false, ''))
             enqueueSnackbar('Something went wrong', {
                 variant: 'error',
             })
@@ -199,15 +209,18 @@ const FarmingCard = ({
 
     const handleHarvest = async () => {
         try {
+            dispatch(setLoaderDisplay(true, ''))
             const amount = ethToWei('0')
             await deposit(poolId, amount, walletAddress)
             enqueueSnackbar('Reward withdrawn successfully', {
                 variant: 'success',
             })
+            dispatch(setLoaderDisplay(false, ''))
         } catch (err) {
             enqueueSnackbar('Something went wrong', {
                 variant: 'error',
             })
+            dispatch(setLoaderDisplay(false, ''))
         }
     }
 
@@ -307,7 +320,7 @@ const FarmingCard = ({
             {stakeModalStatus === true ? (
                 <StakeDeposit
                     title={title}
-                    // logo={logo}
+                    logo={logo}
                     allowance={lpTokenAllowance}
                     walletBalance={lpTokenBalance}
                     walletAmount={inputAmount}
@@ -324,7 +337,7 @@ const FarmingCard = ({
             {unStakeModalStatus === true ? (
                 <StakeWithdraw
                     title={title}
-                    // logo={logo}
+                    logo={logo}
                     ssgtStaked={stakedValue}
                     lpTokensPriceUsd={stakedLpTokensPriceUsd}
                     walletAmount={inputAmount}

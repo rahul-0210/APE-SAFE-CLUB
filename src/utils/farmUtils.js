@@ -12,7 +12,7 @@ export const calculateApr = async (
     const tokenPerYear = rewardPerBlock * blocksPerYear
     if (liquidityValue !== 0 && allocPoint && totalAllocation && priceUsd) {
         const poolWeight = Number(allocPoint) / Number(totalAllocation)
-        const yearlyRewardAllocation = tokenPerYear * poolWeight
+        const yearlyRewardAllocation = +tokenPerYear * poolWeight
         const rewardsApr =
             ((Number(yearlyRewardAllocation) * Number(priceUsd)) /
                 Number(liquidityValue)) *
@@ -45,8 +45,8 @@ export const calculateLiquidity = async (
 
     try {
         if (urlForToken0 && liquidityToken0) {
-            const usdValueToken0 = await getTokenUSDPrice(urlForToken0.tokenUrl)
-            if (urlForToken0[0].name === 'ASC') {
+            let usdValueToken0 = await getTokenUSDPrice(urlForToken0.tokenUrl)
+            if (urlForToken0.name === 'ASC') {
                 usdValueToken0 = usdValueToken0.data
             }
             if (

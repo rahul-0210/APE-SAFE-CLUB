@@ -9,8 +9,7 @@ export const ethToWei = (value) => {
     return web3.utils.toWei(value, 'ether')
 }
 
-const farmingContractAddress =
-    process.env.REACT_APP_FARMING_CONTRACT_ADDRESS_OLD
+const farmingContractAddress = process.env.REACT_APP_FARMING_CONTRACT_ADDRESS
 // const lpTokenContractAddress = process.env.REACT_APP_LPTOKEN_CONTRACT_ADDRESS
 
 const farmingContract = new web3.eth.Contract(
@@ -109,7 +108,7 @@ export const getEarnedTokens = async (walletAddress) => {
 export const getPendingtokens = async (walletAddress, pool) => {
     try {
         let pendingTokens = await farmingContract.methods
-            .pendingTGC(pool, walletAddress)
+            .pendingASC(pool, walletAddress)
             .call({from: walletAddress})
         pendingTokens = (pendingTokens / 10 ** 9).toFixed(3).toString()
         return pendingTokens
@@ -121,9 +120,9 @@ export const getPendingtokens = async (walletAddress, pool) => {
 export const getTokensPerBlock = async (walletAddress) => {
     try {
         let tokenPerBlock = await farmingContract.methods
-            .tgcPerBlock()
+            .ascPerBlock()
             .call({from: walletAddress})
-        tokenPerBlock = (tokenPerBlock / 10 ** 9).toFixed(3).toString()
+        tokenPerBlock = (tokenPerBlock / 10 ** 18).toFixed(3).toString()
         return tokenPerBlock
     } catch (error) {
         throw error
@@ -193,37 +192,19 @@ export const getLpTokenAllowance = async (
     }
 }
 
-export const getLpTokenSymbol0 = async (
+export const getLpTokenSymbol = async (
     walletAddress,
-    lpToken0ContractAddress
+    lpTokenContractAddress
 ) => {
     try {
-        const lpToken0Contract = new web3.eth.Contract(
+        const lpTokenContract = new web3.eth.Contract(
             lpTokenABI,
-            lpToken0ContractAddress
+            lpTokenContractAddress
         )
-        const symbol0 = await lpToken0Contract.methods
+        const symbol = await lpTokenContract.methods
             .symbol()
             .call({from: walletAddress})
-        return symbol0
-    } catch (error) {
-        throw error
-    }
-}
-
-export const getLpTokenSymbol1 = async (
-    walletAddress,
-    lpToken1ContractAddress
-) => {
-    try {
-        const lpToken1Contract = new web3.eth.Contract(
-            lpTokenABI,
-            lpToken1ContractAddress
-        )
-        const symbol1 = await lpToken1Contract.methods
-            .symbol()
-            .call({from: walletAddress})
-        return symbol1
+        return symbol
     } catch (error) {
         throw error
     }
@@ -278,42 +259,98 @@ export const getLpToken1 = async (walletAddress, lpTokenContractAddress) => {
     }
 }
 
-export const getLpToken0Liquidity = async (
+export const getLpTokenLiquidity = async (
     walletAddress,
-    lpTokenContractAddress,
-    lpToken0ContractAddress
+    lpContractAddress,
+    tokenContractAddress
 ) => {
     try {
-        const lpToken0Contract = new web3.eth.Contract(
+        const lpTokenContract = new web3.eth.Contract(
             lpTokenABI,
-            lpToken0ContractAddress
+            tokenContractAddress
         )
-        let token0Liquidity = await lpToken0Contract.methods
-            .balanceOf(lpTokenContractAddress)
+        let tokenLiquidity = await lpTokenContract.methods
+            .balanceOf(lpContractAddress)
             .call({from: walletAddress})
-        token0Liquidity = (token0Liquidity / 10 ** 18).toFixed(3).toString()
-        return token0Liquidity
+        tokenLiquidity = (tokenLiquidity / 10 ** 18).toFixed(3).toString()
+        return tokenLiquidity
     } catch (error) {
         throw error
     }
 }
 
-export const getLpToken1Liquidity = async (
-    walletAddress,
-    lpTokenContractAddress,
-    lpToken1ContractAddress
-) => {
-    try {
-        const lpToken1Contract = new web3.eth.Contract(
-            lpTokenABI,
-            lpToken1ContractAddress
-        )
-        let token1Liquidity = await lpToken1Contract.methods
-            .balanceOf(lpTokenContractAddress)
-            .call({from: walletAddress})
-        token1Liquidity = (token1Liquidity / 10 ** 18).toFixed(3).toString()
-        return token1Liquidity
-    } catch (error) {
-        throw error
-    }
-}
+// export const getLpTokenSymbol0 = async (
+//     walletAddress,
+//     lpToken0ContractAddress
+// ) => {
+//     try {
+//         const lpToken0Contract = new web3.eth.Contract(
+//             lpTokenABI,
+//             lpToken0ContractAddress
+//         )
+//         const symbol0 = await lpToken0Contract.methods
+//             .symbol()
+//             .call({from: walletAddress})
+//         return symbol0
+//     } catch (error) {
+//         throw error
+//     }
+// }
+
+// export const getLpTokenSymbol1 = async (
+//     walletAddress,
+//     lpToken1ContractAddress
+// ) => {
+//     try {
+//         const lpToken1Contract = new web3.eth.Contract(
+//             lpTokenABI,
+//             lpToken1ContractAddress
+//         )
+//         const symbol1 = await lpToken1Contract.methods
+//             .symbol()
+//             .call({from: walletAddress})
+//         return symbol1
+//     } catch (error) {
+//         throw error
+//     }
+// }
+
+// export const getLpToken0Liquidity = async (
+//     walletAddress,
+//     lpTokenContractAddress,
+//     lpToken0ContractAddress
+// ) => {
+//     try {
+//         const lpToken0Contract = new web3.eth.Contract(
+//             lpTokenABI,
+//             lpToken0ContractAddress
+//         )
+//         let token0Liquidity = await lpToken0Contract.methods
+//             .balanceOf(lpTokenContractAddress)
+//             .call({from: walletAddress})
+//         token0Liquidity = (token0Liquidity / 10 ** 18).toFixed(3).toString()
+//         return token0Liquidity
+//     } catch (error) {
+//         throw error
+//     }
+// }
+
+// export const getLpToken1Liquidity = async (
+//     walletAddress,
+//     lpTokenContractAddress,
+//     lpToken1ContractAddress
+// ) => {
+//     try {
+//         const lpToken1Contract = new web3.eth.Contract(
+//             lpTokenABI,
+//             lpToken1ContractAddress
+//         )
+//         let token1Liquidity = await lpToken1Contract.methods
+//             .balanceOf(lpTokenContractAddress)
+//             .call({from: walletAddress})
+//         token1Liquidity = (token1Liquidity / 10 ** 18).toFixed(3).toString()
+//         return token1Liquidity
+//     } catch (error) {
+//         throw error
+//     }
+// }

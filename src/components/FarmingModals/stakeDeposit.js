@@ -44,24 +44,10 @@ const StakeDeposit = (props) => {
                         </p>
                     </div>
                     <div className="balance">
-                        <div>
-                            Balance in wallet: {props?.walletBalance}
-                            {/* {props?.walletBalance
-                                ? utils.commify(
-                                      toMax4Decimals(
-                                          parseFloat(props?.walletBalance)
-                                      )
-                                  )
-                                : 0.0} */}
-                        </div>
+                        <div>Balance in wallet: {props?.walletBalance}</div>
                         {props.lpTokensPriceUsd ? (
                             <div>
                                 LP Token Price: ${props?.lpTokensPriceUsd}
-                                {/* {utils.commify(
-                                    parseFloat(
-                                        props?.lpTokensPriceUsd.toFixed(5)
-                                    )
-                                )} */}
                             </div>
                         ) : (
                             <div>LP Token Price: $0.00</div>
