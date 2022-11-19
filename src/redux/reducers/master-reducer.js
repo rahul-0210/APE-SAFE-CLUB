@@ -14,8 +14,8 @@ const masterReducer = (
         case SET_LOADER_DISPLAY:
             return Object.assign({}, state, {
                 isLoaderOpen: action.isLoaderOpen,
-                reloadWarning: action.reloadWarning
-            });
+                reloadWarning: action.reloadWarning,
+            })
         default:
             return state
     }

@@ -143,14 +143,14 @@
         .btn {
           border: double 1px transparent;
           border-radius: 10px;
-          background-image: linear-gradient(#f2f5fa, #f2f5fa), radial-gradient(circle at top right, #142c48 4.02%, #c1d7fc 97.87%);
+          // background-image: linear-gradient(#f2f5fa, #f2f5fa), radial-gradient(circle at top right, #142c48 4.02%, #c1d7fc 97.87%);
           background-origin: border-box;
           background-clip: content-box, border-box;
           margin-right: 10px;
 
           button {
             border-radius: 10px;
-            color: #142c48;
+            color: #fff;
             padding: 10px 15px;
             font-weight: 600;
             font-size: 14px;

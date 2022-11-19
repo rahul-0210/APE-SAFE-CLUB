@@ -509,9 +509,11 @@ export default function CoinFlip() {
                                 <div className="side-b">
                                     <img
                                         width="100"
-                                        src={!watchModalDetails.coinSide
-                                            ? silverCoin
-                                            : goldCoin}
+                                        src={
+                                            !watchModalDetails.coinSide
+                                                ? silverCoin
+                                                : goldCoin
+                                        }
                                         alt="gold-coin"
                                     />
                                 </div>

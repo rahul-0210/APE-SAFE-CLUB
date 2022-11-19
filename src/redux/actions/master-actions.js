@@ -7,10 +7,10 @@ export function setSidebarOpen(isOpen) {
     }
 }
 
-export function setLoaderDisplay(isLoaderOpen, reloadWarning){ 
-    return{
+export function setLoaderDisplay(isLoaderOpen, reloadWarning) {
+    return {
         type: SET_LOADER_DISPLAY,
         isLoaderOpen: isLoaderOpen,
-        reloadWarning: reloadWarning
+        reloadWarning: reloadWarning,
     }
 }

@@ -14,7 +14,7 @@ export const ALLOWED_NETWORKS = {
 }
 
 export const PATH_HEADER_TEXT_MAPPING = {
-    "/farm": "Ape Farms",
+    '/farm': 'Ape Farms',
     '/lottery': 'Lottery',
     '/coin-flip': 'Coin Flip',
 }
