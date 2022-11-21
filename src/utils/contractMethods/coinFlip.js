@@ -111,3 +111,12 @@ export const getAllGames = async (userAddress) => {
         throw error
     }
 }
+
+export const getAllRemainingGames = async userAddress => {
+    try{
+        return await coinFlipContract.methods.
+        getAllPastGames().call({from: userAddress})
+    } catch (error) {
+        throw error
+    }
+}
