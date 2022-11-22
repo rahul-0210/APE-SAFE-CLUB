@@ -1,5 +1,13 @@
-import {userBalance, getAllGames, getAllRemainingGames} from '../../utils/contractMethods/coinFlip'
-import {USER_TOKEN_BALANCE, COIN_FLIP_GAME_TABLE_DATA, INACTIVE_COIN_FLIP_GAME_TABLE_DATA} from '../types'
+import {
+    userBalance,
+    getAllGames,
+    getAllRemainingGames,
+} from '../../utils/contractMethods/coinFlip'
+import {
+    USER_TOKEN_BALANCE,
+    COIN_FLIP_GAME_TABLE_DATA,
+    INACTIVE_COIN_FLIP_GAME_TABLE_DATA,
+} from '../types'
 
 export const getGameData = (userAddress) => (dispatch) => {
     dispatch(getUserTokenBalance(userAddress))
@@ -31,16 +39,15 @@ export const getAllGamesData = (userAddress) => async (dispatch) => {
     }
 }
 
-export const getAllRemainingData = userAddress => async dispatch => {
+export const getAllRemainingData = (userAddress) => async (dispatch) => {
     try {
-        let result = await getAllRemainingGames(userAddress);
-        console.log("%c Line:37 🍻 result", "color:#465975", result);
+        let result = await getAllRemainingGames(userAddress)
         dispatch({
             type: INACTIVE_COIN_FLIP_GAME_TABLE_DATA,
-            payload: result
+            payload: result,
         })
     } catch (error) {
-        console.log("%c Line:37 🍎 error", "color:#4fff4B", error);
+        console.log('%c Line:37 🍎 error', 'color:#4fff4B', error)
     }
 }
 

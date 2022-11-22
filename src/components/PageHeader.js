@@ -7,7 +7,7 @@ export default function PageHeader({title, btnTitle, btnMethod, userTokenBal}) {
             <Grid container spacing={2}>
                 <Grid item lg={6} sm={12}>
                     <Typography component="h1" className="title">
-                        {title}  ({userTokenBal} ASC)
+                        {title} ({userTokenBal} ASC)
                     </Typography>
                 </Grid>
                 <Grid item lg={6} sm={12} className="btn-div">

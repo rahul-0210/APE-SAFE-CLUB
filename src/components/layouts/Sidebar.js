@@ -5,6 +5,8 @@ import {NavLink} from 'react-router-dom'
 import {setSidebarOpen} from '../../redux/actions/master-actions'
 
 import Telegram from '../../assets/nav-icons/telegram.svg'
+import TelegramAnnouncment from '../../assets/nav-icons/telegram-announcement.svg'
+
 import Twitter from '../../assets/nav-icons/twitter.svg'
 import Discord from '../../assets/nav-icons/discord.svg'
 import coinflip from '../../assets/nav-icons/coinFlip.svg'
@@ -12,6 +14,7 @@ import diceLogo from '../../assets/nav-icons/dice.svg'
 import ExternalLink from '../../assets/nav-icons/external-link-icon.svg'
 import Tractor from '../../assets/nav-icons/tractor.svg'
 import apeLogo from '../../assets/logo.png'
+import apeLogoWhite from '../../assets/logo-white.png'
 
 const Sidebar = () => {
     const dispatch = useDispatch()
@@ -20,7 +23,7 @@ const Sidebar = () => {
     const NAV_LINKS = [
         {
             logo: Tractor,
-            title: 'Farms',
+            title: 'Ape Farms',
             subtext: 'Great pasive income',
             path: '/farm',
             isExternal: false,
@@ -43,10 +46,10 @@ const Sidebar = () => {
             network: null,
         },
         {
-            logo: apeLogo,
+            logo: apeLogoWhite,
             title: 'Website',
             subtext: 'Visit our Website',
-            path: 'http://thegarden.finance/',
+            path: 'https://apesafe.club/',
             isExternal: true,
             network: null,
         },
@@ -79,26 +82,17 @@ const Sidebar = () => {
                 </ul>
             </div>
             <div className="footerLinks">
-                <a
-                    href="https://t.me/TheGarden_group"
-                    target="_blank"
-                    rel="noreferrer"
-                >
-                    <img src={Telegram} alt="telegram" />
+                <a href="https://t.me/apesafeclub" target="_blank">
+                    <img src={Telegram} alt="" />
                 </a>
-                <a
-                    href="https://twitter.com/TheGardenCoin"
-                    target="_blank"
-                    rel="noreferrer"
-                >
-                    <img src={Twitter} alt="twitter" />
+                <a href="https://t.me/apesafeclub_announcement" target="_blank">
+                    <img src={TelegramAnnouncment} alt="" />
                 </a>
-                <a
-                    href="https://discord.com/invite/Z5ZJmDMREv"
-                    target="_blank"
-                    rel="noreferrer"
-                >
-                    <img src={Discord} alt="discord" />
+                <a href="https://twitter.com/ApeSafeClub" target="_blank">
+                    <img src={Twitter} alt="" />
+                </a>
+                <a href="https://discord.gg/pTMYwPse6y" target="_blank">
+                    <img src={Discord} alt="" />
                 </a>
             </div>
         </div>

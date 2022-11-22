@@ -78,7 +78,7 @@ export function WalletDropdown() {
         try {
             await activate(injected)
         } catch (error) {
-            console.log("%c Line:81 🍏 error", "color:#e41a6a", error);
+            console.log('%c Line:81 🍏 error', 'color:#e41a6a', error)
         }
     }
 
