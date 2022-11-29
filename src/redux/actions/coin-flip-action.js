@@ -39,9 +39,18 @@ export const getAllGamesData = (userAddress) => async (dispatch) => {
     }
 }
 
+const reverseArr = (input) => {
+    var ret = [];
+    for(var i = input.length-1; i >= 0; i--) {
+        ret.push(input[i]);
+    }
+    return ret;
+}
+
 export const getAllRemainingData = (userAddress) => async (dispatch) => {
     try {
         let result = await getAllRemainingGames(userAddress)
+        result = reverseArr(result)
         dispatch({
             type: INACTIVE_COIN_FLIP_GAME_TABLE_DATA,
             payload: result,
