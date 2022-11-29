@@ -526,17 +526,19 @@ export default function CoinFlip() {
                                         alt="gold-coin"
                                     />
                                 </div>
-                                <div className="side-b">
-                                    <img
-                                        width="100"
-                                        src={
-                                            !watchModalDetails.coinSide
-                                                ? silverCoin
-                                                : goldCoin
-                                        }
-                                        alt="gold-coin"
-                                    />
-                                </div>
+                                {openJoinDailog.isActive ? (
+                                    <div className="side-b">
+                                        <img
+                                            width="100"
+                                            src={
+                                                !watchModalDetails.coinSide
+                                                    ? silverCoin
+                                                    : goldCoin
+                                            }
+                                            alt="gold-coin"
+                                        />
+                                    </div>
+                                ) : null}
                             </div>
                             {openJoinDailog.isActive ? (
                                 <button
@@ -608,7 +610,7 @@ export default function CoinFlip() {
         return `${account.slice(0, 8)}...${account.slice(-4)}`
     }
     return (
-        <Box sx={{p: 5}} className="coin-flip-main">
+        <Box sx={{p: 5}} className="coin-flip">
             {createCoinFlipModal()}
             {watchModal()}
             {joinModal()}
