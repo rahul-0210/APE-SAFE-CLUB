@@ -17,7 +17,7 @@ export const PATH_HEADER_TEXT_MAPPING = {
     '/farm': 'Ape Farms',
     '/lottery': 'Lottery',
     '/coin-flip': 'Ape Flip',
-    '/dex': "Ape Dex"
+    '/dex': 'Ape Dex',
 }
 
 export const CONTRACT_ADDRESS = {

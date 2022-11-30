@@ -173,7 +173,7 @@ export default function CoinFlip() {
                         backgroundOrigin: 'border-box',
                         backgroundColor: '#000',
                         backgroundClip: 'content-box, border-box',
-                        minWidth: "600px",
+                        minWidth: '600px',
                         color: '#fff',
 
                         boxShadow:
@@ -342,7 +342,7 @@ export default function CoinFlip() {
                         backgroundOrigin: 'border-box',
                         backgroundColor: '#000',
                         backgroundClip: 'content-box, border-box',
-                        minWidth: "600px",
+                        minWidth: '600px',
                         color: '#fff',
 
                         boxShadow:
@@ -389,8 +389,15 @@ export default function CoinFlip() {
                                 />
                             )}
                         </Grid>
-                        <Grid item lg={8} className="center" style={{flexDirection:"column"}}>
-                            {watchModalDetails[0] ? displayWalletAddr(watchModalDetails[0]) : ""}
+                        <Grid
+                            item
+                            lg={8}
+                            className="center"
+                            style={{flexDirection: 'column'}}
+                        >
+                            {watchModalDetails[0]
+                                ? displayWalletAddr(watchModalDetails[0])
+                                : ''}
                             <Grid
                                 container
                                 style={{marginTop: '1rem'}}
@@ -428,7 +435,9 @@ export default function CoinFlip() {
     }
 
     const joinModal = () => {
-        let isWinner = watchModalDetails.winner !== "0x0000000000000000000000000000000000000000";
+        let isWinner =
+            watchModalDetails.winner !==
+            '0x0000000000000000000000000000000000000000'
         return (
             <Dialog
                 fullScreen={fullScreen}
@@ -449,7 +458,7 @@ export default function CoinFlip() {
                         backgroundOrigin: 'border-box',
                         backgroundColor: '#000',
                         backgroundClip: 'content-box, border-box',
-                        minWidth: "600px",
+                        minWidth: '600px',
                         color: '#fff',
 
                         boxShadow:
@@ -480,7 +489,9 @@ export default function CoinFlip() {
                                         : '#fff',
                             }}
                         >
-                            {watchModalDetails[0] ? displayWalletAddr(watchModalDetails[0]) : ""}
+                            {watchModalDetails[0]
+                                ? displayWalletAddr(watchModalDetails[0])
+                                : ''}
                             <Grid
                                 container
                                 style={{marginTop: '1rem'}}
@@ -556,13 +567,15 @@ export default function CoinFlip() {
                                     Coin Toss
                                 </button>
                             ) : null}
-                            {
-                                isWinner ? 
-                                    <span style={{paddingTop:"1rem"}}>
-                                        {openJoinDailog?.gameData?.winner ? displayWalletAddr(openJoinDailog?.gameData?.winner) : ""}
-                                    </span>
-                                : null
-                            }
+                            {isWinner ? (
+                                <span style={{paddingTop: '1rem'}}>
+                                    {openJoinDailog?.gameData?.winner
+                                        ? displayWalletAddr(
+                                              openJoinDailog?.gameData?.winner
+                                          )
+                                        : ''}
+                                </span>
+                            ) : null}
                         </Grid>
                         <Grid
                             item
@@ -579,7 +592,9 @@ export default function CoinFlip() {
                                         : '#fff',
                             }}
                         >
-                            {walletAddress ? displayWalletAddr(walletAddress) : ""}
+                            {walletAddress
+                                ? displayWalletAddr(walletAddress)
+                                : ''}
                             <Grid
                                 container
                                 style={{marginTop: '1rem'}}
@@ -708,7 +723,9 @@ export default function CoinFlip() {
                                                       component="td"
                                                       scope="row"
                                                   >
-                                                      {displayWalletAddr(cp.player1)}
+                                                      {displayWalletAddr(
+                                                          cp.player1
+                                                      )}
                                                   </TableCell>
                                                   <TableCell
                                                       className="table-row"

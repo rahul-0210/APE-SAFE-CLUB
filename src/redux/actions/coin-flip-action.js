@@ -40,11 +40,11 @@ export const getAllGamesData = (userAddress) => async (dispatch) => {
 }
 
 const reverseArr = (input) => {
-    var ret = [];
-    for(var i = input.length-1; i >= 0; i--) {
-        ret.push(input[i]);
+    var ret = []
+    for (var i = input.length - 1; i >= 0; i--) {
+        ret.push(input[i])
     }
-    return ret;
+    return ret
 }
 
 export const getAllRemainingData = (userAddress) => async (dispatch) => {

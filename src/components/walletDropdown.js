@@ -96,7 +96,8 @@ export function WalletDropdown() {
                 style={{borderRight: !walletConnectionStatus && 'none'}}
             >
                 <div>
-                    <img alt="logo"
+                    <img
+                        alt="logo"
                         src={
                             isWalletDropdownOpen
                                 ? WalletDropdownActiveIcon

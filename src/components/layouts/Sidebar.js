@@ -91,16 +91,32 @@ const Sidebar = () => {
                 </ul>
             </div>
             <div className="footerLinks">
-                <a href="https://t.me/apesafeclub" target="_blank" rel="noreferrer">
+                <a
+                    href="https://t.me/apesafeclub"
+                    target="_blank"
+                    rel="noreferrer"
+                >
                     <img src={Telegram} alt="Telegram" />
                 </a>
-                <a href="https://t.me/apesafeclub_announcement" target="_blank" rel="noreferrer">
+                <a
+                    href="https://t.me/apesafeclub_announcement"
+                    target="_blank"
+                    rel="noreferrer"
+                >
                     <img src={TelegramAnnouncment} alt="TelegramAnnouncment" />
                 </a>
-                <a href="https://twitter.com/ApeSafeClub" target="_blank" rel="noreferrer">
+                <a
+                    href="https://twitter.com/ApeSafeClub"
+                    target="_blank"
+                    rel="noreferrer"
+                >
                     <img src={Twitter} alt="Twitter" />
                 </a>
-                <a href="https://discord.gg/pTMYwPse6y" target="_blank" rel="noreferrer">
+                <a
+                    href="https://discord.gg/pTMYwPse6y"
+                    target="_blank"
+                    rel="noreferrer"
+                >
                     <img src={Discord} alt="Discord" />
                 </a>
             </div>
