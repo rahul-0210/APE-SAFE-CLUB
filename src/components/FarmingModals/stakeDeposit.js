@@ -1,5 +1,4 @@
 import React from 'react'
-import {useDispatch, useSelector} from 'react-redux'
 import LoaderComponent from '../loaderComponent'
 
 // import {modalAction, ssgtxModalAction} from '../redux/actions/modalAction'
@@ -8,17 +7,12 @@ import closeIcon from '../../assets/CloseIcon.svg'
 
 const StakeDeposit = (props) => {
     const MAX_BALANCE = '100000000000000000000000000000000'
-    const dispatch = useDispatch()
     // const selector = useSelector((state) => state.modalReducer.title)
     const close = () => {
         props?.updateWalletAmount('')
         // dispatch(modalAction(false, selector))
         // dispatch(ssgtxModalAction(false, selector))
         props?.close()
-    }
-
-    const toMax4Decimals = (x) => {
-        return x.toFixed(20)
     }
 
     const openInNewWindow = (url) => {

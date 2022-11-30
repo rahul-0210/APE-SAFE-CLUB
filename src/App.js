@@ -11,6 +11,7 @@ import RollDice from './pages/rollDice'
 import {setWalletConnectionStatus} from './redux/actions/wallet'
 import LoaderComponent from './components/loaderComponent'
 import Farm from './pages/farm'
+import Dex from './pages/dex'
 
 function App() {
     const {enqueueSnackbar} = useSnackbar()
@@ -75,6 +76,9 @@ function App() {
                             )}
                             {walletConnectionStatus && (
                                 <Route path="/coin-flip" component={CoinFlip} />
+                            )}
+                            {walletConnectionStatus && (
+                                <Route path="/dex" component={Dex} />
                             )}
                             <Route path="*" component={ConnectWallet} />
                         </Switch>

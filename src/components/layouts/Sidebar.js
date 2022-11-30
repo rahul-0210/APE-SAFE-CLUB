@@ -15,6 +15,7 @@ import ExternalLink from '../../assets/nav-icons/external-link-icon.svg'
 import Tractor from '../../assets/nav-icons/tractor.svg'
 import apeLogo from '../../assets/logo.png'
 import apeLogoWhite from '../../assets/logo-white.png'
+import dexIcon from '../../assets/nav-icons/dex.svg'
 
 const Sidebar = () => {
     const dispatch = useDispatch()
@@ -42,6 +43,14 @@ const Sidebar = () => {
             title: 'Roll Dice',
             subtext: 'Chose your fate and select one',
             path: '/dice',
+            isExternal: false,
+            network: null,
+        },
+        {
+            logo: dexIcon,
+            title: 'Dex',
+            subtext: 'Chose your fate and select one',
+            path: '/dex',
             isExternal: false,
             network: null,
         },
@@ -82,17 +91,17 @@ const Sidebar = () => {
                 </ul>
             </div>
             <div className="footerLinks">
-                <a href="https://t.me/apesafeclub" target="_blank">
-                    <img src={Telegram} alt="" />
+                <a href="https://t.me/apesafeclub" target="_blank" rel="noreferrer">
+                    <img src={Telegram} alt="Telegram" />
                 </a>
-                <a href="https://t.me/apesafeclub_announcement" target="_blank">
-                    <img src={TelegramAnnouncment} alt="" />
+                <a href="https://t.me/apesafeclub_announcement" target="_blank" rel="noreferrer">
+                    <img src={TelegramAnnouncment} alt="TelegramAnnouncment" />
                 </a>
-                <a href="https://twitter.com/ApeSafeClub" target="_blank">
-                    <img src={Twitter} alt="" />
+                <a href="https://twitter.com/ApeSafeClub" target="_blank" rel="noreferrer">
+                    <img src={Twitter} alt="Twitter" />
                 </a>
-                <a href="https://discord.gg/pTMYwPse6y" target="_blank">
-                    <img src={Discord} alt="" />
+                <a href="https://discord.gg/pTMYwPse6y" target="_blank" rel="noreferrer">
+                    <img src={Discord} alt="Discord" />
                 </a>
             </div>
         </div>

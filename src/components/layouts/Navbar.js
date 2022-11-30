@@ -13,7 +13,6 @@ const Navbar = () => {
     const location = useLocation()
 
     const {sidebarOpen} = useSelector((state) => state.masterReducer)
-    const {walletAddress} = useSelector((state) => state.wallet)
     const isConnected = false
 
     return (
