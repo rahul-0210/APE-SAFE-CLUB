@@ -30,6 +30,7 @@ export const calculateLiquidity = async (
     liquidityToken0,
     liquidityToken1
 ) => {
+    console.log('liquidityToken0', liquidityToken0)
     let usdRateForToken0, usdRateForToken1
     const urlForToken0 = coingeckoData.find(
         (item) =>

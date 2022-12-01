@@ -11,6 +11,7 @@ import RollDice from './pages/rollDice'
 import {setWalletConnectionStatus} from './redux/actions/wallet'
 import LoaderComponent from './components/loaderComponent'
 import Farm from './pages/farm'
+import Dex from './pages/dex'
 
 function App() {
     const {enqueueSnackbar} = useSnackbar()
@@ -27,37 +28,37 @@ function App() {
         }
     }, [walletAddress, walletConnectionStatus, dispatch, history])
 
-    // useEffect(() => {
-    //     document.addEventListener(
-    //         'keydown',
-    //         function (e) {
-    //             if (e.key === 'F12') {
-    //                 enqueueSnackbar(
-    //                     'This function has been disabled for security reasons!',
-    //                     {
-    //                         variant: 'warning',
-    //                     }
-    //                 )
-    //                 e.preventDefault()
-    //             }
-    //         },
-    //         false
-    //     )
+    useEffect(() => {
+        document.addEventListener(
+            'keydown',
+            function (e) {
+                if (e.key === 'F12') {
+                    enqueueSnackbar(
+                        'This function has been disabled for security reasons!',
+                        {
+                            variant: 'warning',
+                        }
+                    )
+                    e.preventDefault()
+                }
+            },
+            false
+        )
 
-    //     document.addEventListener(
-    //         'contextmenu',
-    //         function (e) {
-    //             enqueueSnackbar(
-    //                 'This function has been disabled for security reasons!',
-    //                 {
-    //                     variant: 'warning',
-    //                 }
-    //             )
-    //             e.preventDefault()
-    //         },
-    //         false
-    //     )
-    // }, [enqueueSnackbar])
+        document.addEventListener(
+            'contextmenu',
+            function (e) {
+                enqueueSnackbar(
+                    'This function has been disabled for security reasons!',
+                    {
+                        variant: 'warning',
+                    }
+                )
+                e.preventDefault()
+            },
+            false
+        )
+    }, [enqueueSnackbar])
 
     return (
         <div className="App g-sidenav-show  bg-gray-100">
@@ -75,6 +76,9 @@ function App() {
                             )}
                             {walletConnectionStatus && (
                                 <Route path="/coin-flip" component={CoinFlip} />
+                            )}
+                            {walletConnectionStatus && (
+                                <Route path="/dex" component={Dex} />
                             )}
                             <Route path="*" component={ConnectWallet} />
                         </Switch>

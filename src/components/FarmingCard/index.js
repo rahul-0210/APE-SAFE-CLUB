@@ -22,20 +22,14 @@ const FarmingCard = ({
 }) => {
     const {
         poolId,
-        multipliers,
-        poolDetails,
         lpTokenBalance,
-        userDetails,
         totalTokensPerBlock,
         stakeFee,
-        lpTokenAddress,
         allocPoint,
         stakedValue,
-        rewardDebt,
         totalAllocPoints,
         totalEarnedTokens,
         totalPendingTokens,
-        lpTokenName,
         lpContract,
         lpTokenTotalSupply,
         lpToken0,
@@ -100,7 +94,7 @@ const FarmingCard = ({
                 totalAllocPoints,
                 totalTokensPerBlock
             )
-            apr && setFarmApr(Number(apr.rewardsApr).toFixed(3))
+            apr && setFarmApr(Number(apr.rewardsApr).toFixed(5))
         }
         execute()
     }, [liquidityValue])
@@ -122,7 +116,7 @@ const FarmingCard = ({
     }, [lpTokenBalance, stakedValue, liquidityValue, lpTokenTotalSupply])
 
     const getEquivalentRewardUSDRate = (value) => {
-        return tokenPrice && +(tokenPrice * value).toFixed(2)
+        return tokenPrice && +(tokenPrice * value).toFixed(5)
     }
 
     const checkAndStake = async () => {
@@ -273,7 +267,10 @@ const FarmingCard = ({
                             <p>STAKED LP BALANCE</p>
                             <p>{stakedValue}</p>
                             <span className="usd-eq">
-                                <p>~{stakedLpTokensPriceUsd || 0} USD</p>
+                                <p>
+                                    ~{stakedLpTokensPriceUsd?.toFixed(5) || 0}{' '}
+                                    USD
+                                </p>
                             </span>
                         </div>
                     </div>

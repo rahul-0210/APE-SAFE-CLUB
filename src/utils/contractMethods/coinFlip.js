@@ -34,7 +34,7 @@ export const userBalance = async (userAddress) => {
         let amount = await tokenContract.methods
             .balanceOf(userAddress)
             .call({from: userAddress})
-        amount = (amount / 10 ** 18).toFixed(3).toString()
+        amount = (amount / 10 ** 18).toFixed(5).toString()
         return amount
     } catch (error) {
         throw error
@@ -94,7 +94,7 @@ export const isApproved = async (userAddress) => {
         let amount = await tokenContract.methods
             .allowance(userAddress, coinFlipContractAddress)
             .call({from: userAddress})
-        amount = (amount / 10 ** 18).toFixed(3).toString()
+        amount = (amount / 10 ** 18).toFixed(5).toString()
         return amount
     } catch (error) {
         throw error
@@ -107,6 +107,16 @@ export const getAllGames = async (userAddress) => {
             .getAllGames()
             .call({from: userAddress})
         return result
+    } catch (error) {
+        throw error
+    }
+}
+
+export const getAllRemainingGames = async (userAddress) => {
+    try {
+        return await coinFlipContract.methods
+            .getAllPastGames()
+            .call({from: userAddress})
     } catch (error) {
         throw error
     }

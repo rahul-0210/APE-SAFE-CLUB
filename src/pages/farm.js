@@ -101,10 +101,10 @@ export default function Farm() {
                     lpTokenAddress: poolInfo.lpToken,
                     allocPoint: poolInfo.allocPoint,
                     stakedValue: (+userInfo.amount / 10 ** 18)
-                        .toFixed(3)
+                        .toFixed(5)
                         .toString(),
                     rewardDebt: (+userInfo.rewardDebt / 10 ** 18)
-                        .toFixed(3)
+                        .toFixed(5)
                         .toString(),
                     totalAllocPoints: allocPoints,
                     totalEarnedTokens: earnedTokens,

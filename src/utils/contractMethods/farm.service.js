@@ -98,7 +98,7 @@ export const getEarnedTokens = async (walletAddress) => {
         let earnedTokens = await farmingContract.methods
             .earnedTokens(walletAddress)
             .call({from: walletAddress})
-        earnedTokens = (earnedTokens / 10 ** 9).toFixed(3).toString()
+        earnedTokens = (earnedTokens / 10 ** 18).toFixed(5).toString()
         return earnedTokens
     } catch (error) {
         throw error
@@ -110,7 +110,7 @@ export const getPendingtokens = async (walletAddress, pool) => {
         let pendingTokens = await farmingContract.methods
             .pendingASC(pool, walletAddress)
             .call({from: walletAddress})
-        pendingTokens = (pendingTokens / 10 ** 9).toFixed(3).toString()
+        pendingTokens = (pendingTokens / 10 ** 18).toFixed(5).toString()
         return pendingTokens
     } catch (error) {
         throw error
@@ -122,7 +122,7 @@ export const getTokensPerBlock = async (walletAddress) => {
         let tokenPerBlock = await farmingContract.methods
             .ascPerBlock()
             .call({from: walletAddress})
-        tokenPerBlock = (tokenPerBlock / 10 ** 18).toFixed(3).toString()
+        tokenPerBlock = (tokenPerBlock / 10 ** 18).toFixed(5).toString()
         return tokenPerBlock
     } catch (error) {
         throw error
@@ -152,7 +152,7 @@ export const getLpTokenBalance = async (
         let balance = await lpTokenContract.methods
             .balanceOf(walletAddress)
             .call({from: walletAddress})
-        balance = (balance / 10 ** 18).toFixed(3).toString()
+        balance = (balance / 10 ** 18).toFixed(5).toString()
         return balance
     } catch (error) {
         throw error
@@ -222,7 +222,7 @@ export const getLpTotalSupply = async (
         let totalSupply = await lpTokenContract.methods
             .totalSupply()
             .call({from: walletAddress})
-        totalSupply = (totalSupply / 10 ** 18).toFixed(3).toString()
+        totalSupply = (totalSupply / 10 ** 18).toFixed(5).toString()
         return totalSupply
     } catch (error) {
         throw error
@@ -272,7 +272,7 @@ export const getLpTokenLiquidity = async (
         let tokenLiquidity = await lpTokenContract.methods
             .balanceOf(lpContractAddress)
             .call({from: walletAddress})
-        tokenLiquidity = (tokenLiquidity / 10 ** 18).toFixed(3).toString()
+        tokenLiquidity = (tokenLiquidity / 10 ** 18).toFixed(5).toString()
         return tokenLiquidity
     } catch (error) {
         throw error
@@ -328,7 +328,7 @@ export const getLpTokenLiquidity = async (
 //         let token0Liquidity = await lpToken0Contract.methods
 //             .balanceOf(lpTokenContractAddress)
 //             .call({from: walletAddress})
-//         token0Liquidity = (token0Liquidity / 10 ** 18).toFixed(3).toString()
+//         token0Liquidity = (token0Liquidity / 10 ** 18).toFixed(5).toString()
 //         return token0Liquidity
 //     } catch (error) {
 //         throw error
@@ -348,7 +348,7 @@ export const getLpTokenLiquidity = async (
 //         let token1Liquidity = await lpToken1Contract.methods
 //             .balanceOf(lpTokenContractAddress)
 //             .call({from: walletAddress})
-//         token1Liquidity = (token1Liquidity / 10 ** 18).toFixed(3).toString()
+//         token1Liquidity = (token1Liquidity / 10 ** 18).toFixed(5).toString()
 //         return token1Liquidity
 //     } catch (error) {
 //         throw error

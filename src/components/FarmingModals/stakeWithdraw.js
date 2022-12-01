@@ -1,25 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import {Tooltip} from '@material-ui/core'
-import {useDispatch, useSelector} from 'react-redux'
 import LoaderComponent from '../loaderComponent'
-
-// import {
-//     unStakeModalAction,
-//     unStakeModalActionSsgtx,
-// } from '../redux/actions/modalAction'
-// import UnstakeNftList from "./unstakeNftlist";
-
 import closeIcon from '../../assets/CloseIcon.svg'
-// import InfoIcon from '../assets/InfoIcon.svg'
 
 const StakeWithdraw = (props) => {
     const MAX_BALANCE = '500000'
-    const dispatch = useDispatch()
-    // const selector = useSelector((state) => state.modalReducer.title)
     const close = () => {
         props.updateWalletAmount('')
-        // dispatch(unStakeModalAction(false, selector))
-        // dispatch(unStakeModalActionSsgtx(false, selector))
         props.close()
     }
 
@@ -43,7 +29,7 @@ const StakeWithdraw = (props) => {
             return true
         }
 
-        if (props.isNFTEnabled && props.selectedTokenList.length == 0) {
+        if (props.isNFTEnabled && props.selectedTokenList.length === 0) {
             if (
                 props.walletAmount.length === 0 ||
                 props.walletAmount === '' ||
@@ -67,7 +53,7 @@ const StakeWithdraw = (props) => {
     }
 
     const toMax3Decimals = (x) => {
-        return x.toFixed(20)
+        return x.toFixed(5)
     }
 
     const calculateCurrentlyUnstaking = () => {
@@ -196,9 +182,9 @@ const StakeWithdraw = (props) => {
                             <div>
                                 LP Token Price: $
                                 {/* {utils.commify(
-                                    parseFloat(
-                                        props?.lpTokensPriceUsd.toFixed(5)
-                                    )
+                                    parseFloat( */}
+                                {props?.lpTokensPriceUsd.toFixed(5)}
+                                {/* )
                                 )} */}
                             </div>
                         ) : (

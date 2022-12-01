@@ -6,20 +6,22 @@ import {
     setWalletConnectionStatus,
     setDisplayWalletAdress,
 } from '../redux/actions/wallet'
-import WalletDropdownIcon from '../assets/nav-icons/wallet-icon.png';
-import WalletDropdownActiveIcon from '../assets/nav-icons/wallet-active-icon.png';
+import WalletDropdownIcon from '../assets/nav-icons/wallet-icon.png'
+import WalletDropdownActiveIcon from '../assets/nav-icons/wallet-active-icon.png'
 
 import {ClickAwayListener} from '@material-ui/core'
-import { useWeb3React } from '@web3-react/core';
-import { useSnackbar } from 'notistack';
-import { injected } from '../utils/connectors';
+import {useWeb3React} from '@web3-react/core'
+import {useSnackbar} from 'notistack'
+import {injected} from '../utils/connectors'
 
 export function WalletDropdown() {
     const [isWalletDropdownOpen, setIsWalletDropdownOpen] = useState(false)
     const {enqueueSnackbar} = useSnackbar()
 
     const dispatch = useDispatch()
-    const {walletConnectionStatus, displayWalletAddress} = useSelector((state) => state.wallet)
+    const {walletConnectionStatus, displayWalletAddress} = useSelector(
+        (state) => state.wallet
+    )
 
     const {active, account, activate, deactivate, chainId} = useWeb3React()
 
@@ -76,6 +78,7 @@ export function WalletDropdown() {
         try {
             await activate(injected)
         } catch (error) {
+            console.log('%c Line:81 🍏 error', 'color:#e41a6a', error)
         }
     }
 
@@ -94,6 +97,7 @@ export function WalletDropdown() {
             >
                 <div>
                     <img
+                        alt="logo"
                         src={
                             isWalletDropdownOpen
                                 ? WalletDropdownActiveIcon

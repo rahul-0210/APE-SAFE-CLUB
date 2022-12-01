@@ -7,12 +7,15 @@ import {
     TableHead,
     TableRow,
     Grid,
+    Tab,
 } from '@material-ui/core'
+import {TabContext, TabList, TabPanel} from '@mui/lab'
 import React, {useState, useEffect} from 'react'
 import PageHeader from '../components/PageHeader'
 import silverCoin from '../assets/silvercoin.png'
 import goldCoin from '../assets/goldCoin.png'
 import coins from '../assets/coins.svg'
+import coinBlue from '../assets/coins-blue.svg'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -45,12 +48,11 @@ export default function CoinFlip() {
     const [isGameCreated, setIsGameCreated] = useState(false)
 
     const [watchModalDetails, setWatchModalDetails] = useState([])
+    const [value, setValue] = React.useState('active')
     const dispatch = useDispatch()
     const {walletAddress} = useSelector((state) => state.wallet)
-    const {userTokenBal, coinFlipTableData} = useSelector(
-        (state) => state.conFlipReducer
-    )
-    console.log('coinFlipTableData', coinFlipTableData)
+    const {userTokenBal, coinFlipTableData, inactiveCoinFlipTableData} =
+        useSelector((state) => state.conFlipReducer)
 
     useEffect(() => {
         if (walletAddress || isGameCreated) {
@@ -63,6 +65,10 @@ export default function CoinFlip() {
             clearInterval(dataInterval)
         }
     }, [walletAddress, isGameCreated])
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue)
+    }
 
     const coin = {
         GOLD: true,
@@ -90,8 +96,8 @@ export default function CoinFlip() {
                     })
                 }, 3000)
             } else if (result.winner === walletAddress) {
-                if (gameData.coinSide) setFlipResult('tails')
-                else if (!gameData.coinSide) setFlipResult('heads')
+                if (gameData.coinSide) setFlipResult('heads')
+                else if (!gameData.coinSide) setFlipResult('tails')
                 setTimeout(() => {
                     enqueueSnackbar('Congratulations! You won the game.', {
                         variant: 'success',
@@ -167,6 +173,7 @@ export default function CoinFlip() {
                         backgroundOrigin: 'border-box',
                         backgroundColor: '#000',
                         backgroundClip: 'content-box, border-box',
+                        minWidth: '600px',
                         color: '#fff',
 
                         boxShadow:
@@ -335,6 +342,7 @@ export default function CoinFlip() {
                         backgroundOrigin: 'border-box',
                         backgroundColor: '#000',
                         backgroundClip: 'content-box, border-box',
+                        minWidth: '600px',
                         color: '#fff',
 
                         boxShadow:
@@ -345,7 +353,7 @@ export default function CoinFlip() {
                 maxWidth="md"
             >
                 <DialogTitle id="responsive-dialog-title">
-                    {'User Game'}
+                    {'Watch Game'}
                 </DialogTitle>
                 <DialogContent>
                     <Grid container className="create-game" spacing={3}>
@@ -380,6 +388,16 @@ export default function CoinFlip() {
                                     alt="silver coin"
                                 />
                             )}
+                        </Grid>
+                        <Grid
+                            item
+                            lg={8}
+                            className="center"
+                            style={{flexDirection: 'column'}}
+                        >
+                            {watchModalDetails[0]
+                                ? displayWalletAddr(watchModalDetails[0])
+                                : ''}
                             <Grid
                                 container
                                 style={{marginTop: '1rem'}}
@@ -402,9 +420,6 @@ export default function CoinFlip() {
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <Grid item lg={8} className="center">
-                            {watchModalDetails[0]}
-                        </Grid>
                         <Grid item lg={12} className="center">
                             <button
                                 onClick={() => setOpenWatchDailog(false)}
@@ -420,12 +435,19 @@ export default function CoinFlip() {
     }
 
     const joinModal = () => {
+        let isWinner =
+            watchModalDetails.winner !==
+            '0x0000000000000000000000000000000000000000'
         return (
             <Dialog
                 fullScreen={fullScreen}
                 open={openJoinDailog.isOpen}
                 onClose={() => {
-                    setOpenJoinDailog({gameData: null, isOpen: false})
+                    setOpenJoinDailog({
+                        gameData: null,
+                        isOpen: false,
+                        isActive: false,
+                    })
                     setFlipResult(null)
                 }}
                 aria-labelledby="responsive-dialog-title"
@@ -436,6 +458,7 @@ export default function CoinFlip() {
                         backgroundOrigin: 'border-box',
                         backgroundColor: '#000',
                         backgroundClip: 'content-box, border-box',
+                        minWidth: '600px',
                         color: '#fff',
 
                         boxShadow:
@@ -447,7 +470,7 @@ export default function CoinFlip() {
             >
                 <LoaderComponent />
                 <DialogTitle id="responsive-dialog-title">
-                    {'User Game'}
+                    {isWinner ? 'Check Out Game' : 'Join Game'}
                 </DialogTitle>
                 <DialogContent>
                     <Grid container className="create-game" spacing={3}>
@@ -459,9 +482,16 @@ export default function CoinFlip() {
                                 flexDirection: 'column',
                                 wordBreak: 'break-all',
                                 textAlign: 'center',
+                                color:
+                                    openJoinDailog?.gameData?.winner ===
+                                    watchModalDetails[0]
+                                        ? '#398df5'
+                                        : '#fff',
                             }}
                         >
-                            {watchModalDetails[0]}
+                            {watchModalDetails[0]
+                                ? displayWalletAddr(watchModalDetails[0])
+                                : ''}
                             <Grid
                                 container
                                 style={{marginTop: '1rem'}}
@@ -469,7 +499,12 @@ export default function CoinFlip() {
                             >
                                 <Grid item style={{textAlign: 'right'}} lg={6}>
                                     <img
-                                        src={coins}
+                                        src={
+                                            openJoinDailog?.gameData?.winner ===
+                                            watchModalDetails[0]
+                                                ? coinBlue
+                                                : coins
+                                        }
                                         width={50}
                                         alt="coin img"
                                     />
@@ -506,26 +541,41 @@ export default function CoinFlip() {
                                         alt="gold-coin"
                                     />
                                 </div>
-                                <div className="side-b">
-                                    <img
-                                        width="100"
-                                        src={!watchModalDetails.coinSide
-                                            ? silverCoin
-                                            : goldCoin}
-                                        alt="gold-coin"
-                                    />
-                                </div>
+                                {openJoinDailog.isActive ? (
+                                    <div className="side-b">
+                                        <img
+                                            width="100"
+                                            src={
+                                                !watchModalDetails.coinSide
+                                                    ? silverCoin
+                                                    : goldCoin
+                                            }
+                                            alt="gold-coin"
+                                        />
+                                    </div>
+                                ) : null}
                             </div>
-                            <button
-                                className="btn gradient-btn"
-                                style={{marginTop: '0.5rem'}}
-                                disabled={flipResult}
-                                onClick={() =>
-                                    coinToss(openJoinDailog.gameData)
-                                }
-                            >
-                                Coin Toss
-                            </button>
+                            {openJoinDailog.isActive ? (
+                                <button
+                                    className="btn gradient-btn"
+                                    style={{marginTop: '0.5rem'}}
+                                    disabled={flipResult}
+                                    onClick={() =>
+                                        coinToss(openJoinDailog.gameData)
+                                    }
+                                >
+                                    Coin Toss
+                                </button>
+                            ) : null}
+                            {isWinner ? (
+                                <span style={{paddingTop: '1rem'}}>
+                                    {openJoinDailog?.gameData?.winner
+                                        ? displayWalletAddr(
+                                              openJoinDailog?.gameData?.winner
+                                          )
+                                        : ''}
+                                </span>
+                            ) : null}
                         </Grid>
                         <Grid
                             item
@@ -535,9 +585,16 @@ export default function CoinFlip() {
                                 flexDirection: 'column',
                                 wordBreak: 'break-all',
                                 textAlign: 'center',
+                                color:
+                                    openJoinDailog?.gameData?.winner ===
+                                    walletAddress
+                                        ? '#398df5'
+                                        : '#fff',
                             }}
                         >
-                            {walletAddress}
+                            {walletAddress
+                                ? displayWalletAddr(walletAddress)
+                                : ''}
                             <Grid
                                 container
                                 style={{marginTop: '1rem'}}
@@ -545,7 +602,12 @@ export default function CoinFlip() {
                             >
                                 <Grid item style={{textAlign: 'right'}} lg={6}>
                                     <img
-                                        src={coins}
+                                        src={
+                                            openJoinDailog?.gameData?.winner ===
+                                            walletAddress
+                                                ? coinBlue
+                                                : coins
+                                        }
                                         width={50}
                                         alt="coin img"
                                     />
@@ -569,151 +631,351 @@ export default function CoinFlip() {
             </Dialog>
         )
     }
-
+    const displayWalletAddr = (account) => {
+        return `${account.slice(0, 8)}...${account.slice(-4)}`
+    }
     return (
         <Box sx={{p: 5}} className="coin-flip">
             {createCoinFlipModal()}
             {watchModal()}
             {joinModal()}
             <PageHeader
-                title="Coin Flip"
+                title={`Coin Flip`}
                 btnTitle="Create Match"
+                userTokenBal={userTokenBal}
                 btnMethod={() => setOpenCreateDailog(true)}
             />
             <Box>
-                <TableContainer component={Box} className="title-div">
-                    <Table aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell
-                                    component="th"
-                                    className="table-header"
-                                    align="center"
-                                >
-                                    Game No.
-                                </TableCell>
-                                <TableCell
-                                    component="th"
-                                    className="table-header"
-                                    align="center"
-                                >
-                                    Player
-                                </TableCell>
-                                <TableCell
-                                    component="th"
-                                    className="table-header"
-                                    align="center"
-                                >
-                                    Side
-                                </TableCell>
-                                <TableCell
-                                    component="th"
-                                    className="table-header"
-                                    align="center"
-                                >
-                                    Amount
-                                </TableCell>
-                                <TableCell
-                                    component="th"
-                                    className="table-header"
-                                    align="center"
-                                >
-                                    Action
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {coinFlipTableData && coinFlipTableData.length
-                                ? coinFlipTableData.map((cp, index) => (
-                                      <TableRow
-                                          key={index}
-                                          className="table-row"
-                                      >
-                                          <TableCell
-                                              className="table-row"
-                                              component="td"
-                                              scope="row"
-                                              align="center"
-                                          >
-                                              {cp.gameCount}
-                                          </TableCell>
-                                          <TableCell
-                                              className="table-row"
-                                              component="td"
-                                              scope="row"
-                                          >
-                                              {cp.player1}
-                                          </TableCell>
-                                          <TableCell
-                                              className="table-row"
-                                              align="center"
-                                          >
-                                              <img
-                                                  src={
-                                                      cp.coinSide
-                                                          ? goldCoin
-                                                          : silverCoin
-                                                  }
-                                                  width={75}
-                                                  alt="user coin"
-                                              />
-                                          </TableCell>
-                                          <TableCell
-                                              className="table-row"
-                                              align="center"
-                                          >
-                                              {+cp.betAmount / 10 ** 18}
-                                          </TableCell>
-                                          <TableCell
-                                              className="table-row"
-                                              align="right"
-                                          >
-                                              <Grid container spacing={2}>
-                                                  {cp.player1 !==
-                                                      walletAddress && (
-                                                      <Grid item lg={6} md={12}>
-                                                          <button
-                                                              className="btn gradient-btn w-100"
-                                                              onClick={() => {
-                                                                  setWatchModalDetails(
-                                                                      cp
-                                                                  )
-                                                                  setOpenJoinDailog(
-                                                                      {
-                                                                          gameData:
-                                                                              cp,
-                                                                          isOpen: true,
-                                                                      }
-                                                                  )
-                                                              }}
-                                                          >
-                                                              Join
-                                                          </button>
-                                                      </Grid>
-                                                  )}
-                                                  <Grid item lg={6} md={12}>
-                                                      <button
-                                                          className="btn border-gradient border-gradient-secondary w-100"
-                                                          onClick={() => {
-                                                              setWatchModalDetails(
-                                                                  cp
-                                                              )
-                                                              setOpenWatchDailog(
-                                                                  true
-                                                              )
-                                                          }}
+                <TabContext value={value}>
+                    <TabList value={value} onChange={handleChange} centered>
+                        <Tab
+                            className="coin-tab"
+                            label="Active Games"
+                            value="active"
+                        />
+                        <Tab
+                            className="coin-tab"
+                            label="Inactive Games"
+                            value="in-active"
+                        />
+                    </TabList>
+                    <TabPanel value="active">
+                        <TableContainer component={Box} className="title-div">
+                            <Table aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell
+                                            component="th"
+                                            className="table-header"
+                                            align="center"
+                                        >
+                                            Game No.
+                                        </TableCell>
+                                        <TableCell
+                                            component="th"
+                                            className="table-header"
+                                            align="center"
+                                        >
+                                            Player
+                                        </TableCell>
+                                        <TableCell
+                                            component="th"
+                                            className="table-header"
+                                            align="center"
+                                        >
+                                            Side
+                                        </TableCell>
+                                        <TableCell
+                                            component="th"
+                                            className="table-header"
+                                            align="center"
+                                        >
+                                            Amount
+                                        </TableCell>
+                                        <TableCell
+                                            component="th"
+                                            className="table-header"
+                                            align="center"
+                                        >
+                                            Action
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {coinFlipTableData &&
+                                    coinFlipTableData.length
+                                        ? coinFlipTableData.map((cp, index) => (
+                                              <TableRow
+                                                  key={index}
+                                                  className="table-row"
+                                              >
+                                                  <TableCell
+                                                      className="table-row"
+                                                      component="td"
+                                                      scope="row"
+                                                      align="center"
+                                                  >
+                                                      {parseInt(cp.gameCount) +
+                                                          1}
+                                                  </TableCell>
+                                                  <TableCell
+                                                      className="table-row"
+                                                      component="td"
+                                                      scope="row"
+                                                  >
+                                                      {displayWalletAddr(
+                                                          cp.player1
+                                                      )}
+                                                  </TableCell>
+                                                  <TableCell
+                                                      className="table-row"
+                                                      align="center"
+                                                  >
+                                                      <img
+                                                          src={
+                                                              cp.coinSide
+                                                                  ? goldCoin
+                                                                  : silverCoin
+                                                          }
+                                                          width={75}
+                                                          alt="user coin"
+                                                      />
+                                                  </TableCell>
+                                                  <TableCell
+                                                      className="table-row"
+                                                      align="center"
+                                                  >
+                                                      {+cp.betAmount / 10 ** 18}
+                                                  </TableCell>
+                                                  <TableCell
+                                                      className="table-row"
+                                                      align="right"
+                                                  >
+                                                      <Grid
+                                                          container
+                                                          spacing={2}
                                                       >
-                                                          Watch
-                                                      </button>
-                                                  </Grid>
-                                              </Grid>
-                                          </TableCell>
-                                      </TableRow>
-                                  ))
-                                : null}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                                                          {cp.player1 !==
+                                                              walletAddress && (
+                                                              <Grid
+                                                                  item
+                                                                  lg={6}
+                                                                  md={12}
+                                                              >
+                                                                  <button
+                                                                      className="btn gradient-btn w-100"
+                                                                      onClick={() => {
+                                                                          setWatchModalDetails(
+                                                                              cp
+                                                                          )
+                                                                          setOpenJoinDailog(
+                                                                              {
+                                                                                  gameData:
+                                                                                      cp,
+                                                                                  isOpen: true,
+                                                                                  isActive: true,
+                                                                              }
+                                                                          )
+                                                                      }}
+                                                                  >
+                                                                      Join
+                                                                  </button>
+                                                              </Grid>
+                                                          )}
+                                                          <Grid
+                                                              item
+                                                              lg={6}
+                                                              md={12}
+                                                          >
+                                                              <button
+                                                                  className="btn border-gradient border-gradient-secondary w-100"
+                                                                  onClick={() => {
+                                                                      setWatchModalDetails(
+                                                                          cp
+                                                                      )
+                                                                      setOpenWatchDailog(
+                                                                          true
+                                                                      )
+                                                                  }}
+                                                              >
+                                                                  Watch
+                                                              </button>
+                                                          </Grid>
+                                                      </Grid>
+                                                  </TableCell>
+                                              </TableRow>
+                                          ))
+                                        : null}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </TabPanel>
+                    <TabPanel value="in-active">
+                        <TableContainer component={Box} className="title-div">
+                            <Table aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell
+                                            component="th"
+                                            className="table-header"
+                                            align="center"
+                                        >
+                                            Game No.
+                                        </TableCell>
+                                        <TableCell
+                                            component="th"
+                                            className="table-header"
+                                            align="center"
+                                        >
+                                            Player 1
+                                        </TableCell>
+                                        <TableCell
+                                            component="th"
+                                            className="table-header"
+                                            align="center"
+                                        >
+                                            Player 2
+                                        </TableCell>
+                                        <TableCell
+                                            component="th"
+                                            className="table-header"
+                                            align="center"
+                                        >
+                                            Side
+                                        </TableCell>
+                                        <TableCell
+                                            component="th"
+                                            className="table-header"
+                                            align="center"
+                                        >
+                                            Winner
+                                        </TableCell>
+                                        <TableCell
+                                            component="th"
+                                            className="table-header"
+                                            align="center"
+                                        >
+                                            Amount
+                                        </TableCell>
+                                        <TableCell
+                                            component="th"
+                                            className="table-header"
+                                            align="center"
+                                        >
+                                            Action
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {inactiveCoinFlipTableData &&
+                                    inactiveCoinFlipTableData.length
+                                        ? inactiveCoinFlipTableData.map(
+                                              (cp, index) => (
+                                                  <TableRow
+                                                      key={index}
+                                                      className="table-row"
+                                                  >
+                                                      <TableCell
+                                                          className="table-row"
+                                                          component="td"
+                                                          scope="row"
+                                                          align="center"
+                                                      >
+                                                          {parseInt(
+                                                              cp.gameCount
+                                                          ) + 1}
+                                                      </TableCell>
+                                                      <TableCell
+                                                          className="table-row"
+                                                          component="td"
+                                                          scope="row"
+                                                      >
+                                                          {displayWalletAddr(
+                                                              cp.player1
+                                                          )}
+                                                      </TableCell>
+                                                      <TableCell
+                                                          className="table-row"
+                                                          component="td"
+                                                          scope="row"
+                                                      >
+                                                          {displayWalletAddr(
+                                                              cp.player2
+                                                          )}
+                                                      </TableCell>
+                                                      <TableCell
+                                                          className="table-row"
+                                                          align="center"
+                                                      >
+                                                          <img
+                                                              src={
+                                                                  cp.coinSide
+                                                                      ? goldCoin
+                                                                      : silverCoin
+                                                              }
+                                                              width={75}
+                                                              alt="user coin"
+                                                          />
+                                                      </TableCell>
+                                                      <TableCell
+                                                          className="table-row"
+                                                          component="td"
+                                                          scope="row"
+                                                      >
+                                                          {displayWalletAddr(
+                                                              cp.winner
+                                                          )}
+                                                      </TableCell>
+                                                      <TableCell
+                                                          className="table-row"
+                                                          align="center"
+                                                      >
+                                                          {+cp.betAmount /
+                                                              10 ** 18}
+                                                      </TableCell>
+                                                      <TableCell
+                                                          className="table-row"
+                                                          align="right"
+                                                      >
+                                                          <Grid
+                                                              container
+                                                              spacing={2}
+                                                          >
+                                                              <Grid
+                                                                  item
+                                                                  md={12}
+                                                              >
+                                                                  <button
+                                                                      className="btn gradient-btn w-100"
+                                                                      onClick={() => {
+                                                                          setWatchModalDetails(
+                                                                              cp
+                                                                          )
+                                                                          setOpenJoinDailog(
+                                                                              {
+                                                                                  gameData:
+                                                                                      cp,
+                                                                                  isOpen: true,
+                                                                                  isActive: false,
+                                                                              }
+                                                                          )
+                                                                      }}
+                                                                  >
+                                                                      Check it
+                                                                      out
+                                                                  </button>
+                                                              </Grid>
+                                                          </Grid>
+                                                      </TableCell>
+                                                  </TableRow>
+                                              )
+                                          )
+                                        : null}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </TabPanel>
+                </TabContext>
             </Box>
         </Box>
     )
